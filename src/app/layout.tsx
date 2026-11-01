@@ -25,11 +25,11 @@ const plexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Technilium - Produits tech authentiques, livrés chez vous",
+  title: "TechniLium - Produits tech authentiques, livrés chez vous",
   description:
     "Smartphones, ordinateurs et accessoires vérifiés, avec garantie et paiement à la livraison.",
-  applicationName: "Technilium",
-  appleWebApp: { capable: true, title: "Technilium", statusBarStyle: "default" },
+  applicationName: "TechniLium",
+  appleWebApp: { capable: true, title: "TechniLium", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 

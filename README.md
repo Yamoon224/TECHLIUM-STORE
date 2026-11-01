@@ -1,10 +1,10 @@
-# Technilium - Store
+# TechniLium - Store
 
-Vitrine marketplace (clients) du projet Technilium : catalogue de produits technologiques, recherche, fiches produit - Afrique francophone, prix en F CFA.
+Vitrine marketplace (clients) du projet TechniLium : catalogue de produits technologiques, recherche, fiches produit - Afrique francophone, prix en F CFA.
 
-Application NextJS **totalement autonome** : ses propres dépendances, son propre `src/components` et `src/lib`, rien d'importé depuis un autre dépôt. L'identité visuelle (palette noir/or, logo) est extraite du logo de marque Techlium Group et dupliquée à l'identique dans [TECHNILIUM-WEB-BACKOFFICE](https://github.com/Yamoon224/TECHNILIUM-WEB-BACKOFFICE), par choix - pas de package de design partagé.
+Application NextJS **totalement autonome** : ses propres dépendances, son propre `src/components` et `src/lib`, rien d'importé depuis un autre dépôt. L'identité visuelle (palette noir/or, logo) est extraite du logo de marque Techlium Group et dupliquée à l'identique dans [TechniLium-WEB-BACKOFFICE](https://github.com/Yamoon224/TechniLium-WEB-BACKOFFICE), par choix - pas de package de design partagé.
 
-Dépôts liés : [TECHNILIUM-BACKEND](https://github.com/Yamoon224/TECHNILIUM-BACKEND) (API) · [TECHNILIUM-WEB-BACKOFFICE](https://github.com/Yamoon224/TECHNILIUM-WEB-BACKOFFICE)
+Dépôts liés : [TechniLium-BACKEND](https://github.com/Yamoon224/TechniLium-BACKEND) (API) · [TechniLium-WEB-BACKOFFICE](https://github.com/Yamoon224/TechniLium-WEB-BACKOFFICE)
 
 ## Stack
 
@@ -15,7 +15,7 @@ Dépôts liés : [TECHNILIUM-BACKEND](https://github.com/Yamoon224/TECHNILIUM-BA
 
 ## Démarrage rapide
 
-Nécessite le backend [TECHNILIUM-BACKEND](https://github.com/Yamoon224/TECHNILIUM-BACKEND) démarré sur `http://localhost:8000`.
+Nécessite le backend [TechniLium-BACKEND](https://github.com/Yamoon224/TechniLium-BACKEND) démarré sur `http://localhost:8000`.
 
 ```bash
 npm install
@@ -49,7 +49,7 @@ npm run generate:api-client
 - `/` - accueil façon place de marché : menu des catégories à gauche, bannière et engagements, rayon « Ventes Flash » (offres avec prix barré et pastille -X %, plus forte remise d'abord), un rayon par catégorie avec « Voir plus » ; recherche et filtre affichent une grille de résultats. En-tête et pied de page communs à toutes les pages (layout).
 - `/produits/[slug]` - fiche produit détaillée (prix, garantie, caractéristiques, vendeur), ajout au panier respectant le stock.
 - `/panier` - panier (localStorage) : quantités, suppression, sous-total.
-- **Catalogue en anglais** : noms, descriptions et catégories s'affichent dans la langue choisie quand l'équipe a saisi l'anglais (sinon le français). La langue est aussi gardée dans un cookie (`technilium_lang`) pour que les pages rendues côté serveur interrogent l'API dans la bonne langue ; le changement de langue rafraîchit ces pages. Le panier garde le nom tel qu'il était à l'ajout.
+- **Catalogue en anglais** : noms, descriptions et catégories s'affichent dans la langue choisie quand l'équipe a saisi l'anglais (sinon le français). La langue est aussi gardée dans un cookie (`TechniLium_lang`) pour que les pages rendues côté serveur interrogent l'API dans la bonne langue ; le changement de langue rafraîchit ces pages. Le panier garde le nom tel qu'il était à l'ajout.
 - **Reçus de paiement** : sur la page de suivi, les reçus des paiements encaissés sont téléchargeables en PDF (dans la langue de la commande).
 - `/aide` - **centre d'aide public** (FAQ sans compte : commander, payer, suivre, code de livraison, colis, retours avec le vrai délai, factures, messages ; contacts affichés seulement s'ils sont configurés côté serveur) ; la demande au support (connecté) est sur `/support`.
 - `/suivi` - suivi sans compte : numéro de commande, puis le téléphone utilisé (jamais dans l'URL).

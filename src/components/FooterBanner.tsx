@@ -8,7 +8,7 @@ export async function FooterBanner() {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-7xl px-4">
-      <BannerCarousel slides={slides} label="Technilium" />
+      <BannerCarousel slides={slides} label="TechniLium" />
     </div>
   );
 }

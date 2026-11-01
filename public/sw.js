@@ -1,5 +1,5 @@
 /*
- * Technilium service worker.
+ * TechniLium service worker.
  *
  * Deliberately small and safe for a shop with accounts:
  *  - pages are never stored: a visitor on a shared phone must not find another customer's account,
@@ -10,7 +10,7 @@
  */
 
 const VERSION = "v1";
-const STATIC_CACHE = `technilium-static-${VERSION}`;
+const STATIC_CACHE = `TechniLium-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
 const PRECACHE = [OFFLINE_URL, "/icon-192.png", "/icon-512.png"];
 
@@ -39,7 +39,7 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
     event.waitUntil(
       caches
         .keys()
-        .then((names) => Promise.all(names.filter((name) => name.startsWith("technilium-") && name !== STATIC_CACHE).map((name) => caches.delete(name))))
+        .then((names) => Promise.all(names.filter((name) => name.startsWith("TechniLium-") && name !== STATIC_CACHE).map((name) => caches.delete(name))))
         .then(() => self.clients.claim()),
     );
   });

@@ -317,7 +317,7 @@ function Conversation({
             }`}
           >
             <p className="mb-1 text-xs text-ink-soft">
-              {message.from === "customer" ? <Tr>Vous</Tr> : <Tr>Support Technilium</Tr>}
+              {message.from === "customer" ? <Tr>Vous</Tr> : <Tr>Support TechniLium</Tr>}
             </p>
             <p className="whitespace-pre-wrap text-ink">{message.body}</p>
           </li>

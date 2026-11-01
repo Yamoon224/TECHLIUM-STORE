@@ -23,7 +23,7 @@ describe("hasContact", () => {
   it("is true as soon as one channel is set, hours alone do not count", () => {
     expect(hasContact({})).toBe(false);
     expect(hasContact({ hours: "8h-18h" })).toBe(false);
-    expect(hasContact({ email: "aide@technilium.example" })).toBe(true);
+    expect(hasContact({ email: "aide@TechniLium.example" })).toBe(true);
   });
 });
 

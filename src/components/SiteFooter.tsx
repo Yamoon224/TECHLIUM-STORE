@@ -23,7 +23,7 @@ const COLUMNS: { title: string; Icon: LucideIcon; links: { label: string; href: 
     ],
   },
   {
-    title: "Pourquoi Technilium",
+    title: "Pourquoi TechniLium",
     Icon: ShieldCheck,
     links: [
       { label: "Produits vérifiés avant expédition", href: "/" },
@@ -56,7 +56,7 @@ export function SiteFooter() {
         ))}
       </div>
       <p className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/60">
-        <Tr>© Technilium - Produits tech authentiques, livrés chez vous.</Tr>
+        <Tr>© TechniLium - Produits tech authentiques, livrés chez vous.</Tr>
       </p>
     </footer>
   );

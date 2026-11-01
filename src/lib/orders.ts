@@ -82,7 +82,7 @@ export interface PlaceOrderInput {
 
 export class CheckoutError extends Error {}
 
-const LAST_ORDER_STORAGE_KEY = "technilium_last_order";
+const LAST_ORDER_STORAGE_KEY = "TechniLium_last_order";
 
 /**
  * Hands the just-placed order to the confirmation page via sessionStorage
@@ -171,9 +171,9 @@ export async function getOrder(orderNumber: string, phone: string): Promise<Orde
   return response.json() as Promise<Order>;
 }
 
-/** "Colis 2 - vendeur vérifié" / "Colis 1 - Technilium": the parcel's seller, as the customer sees it. */
+/** "Colis 2 - vendeur vérifié" / "Colis 1 - TechniLium": the parcel's seller, as the customer sees it. */
 export function parcelLabel(parcel: Pick<SubOrder, "vendor_id">, index: number): string {
-  return `Colis ${index + 1} - ${parcel.vendor_id === null ? "expédié par Technilium" : "vendeur vérifié"}`;
+  return `Colis ${index + 1} - ${parcel.vendor_id === null ? "expédié par TechniLium" : "vendeur vérifié"}`;
 }
 
 /** One order of the signed-in customer, with its parcels and histories; null when it is not theirs. */
