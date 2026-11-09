@@ -4,7 +4,11 @@ import { describe, expect, it } from "vitest";
 import { PHRASES_EN } from "./phrases";
 
 /** Brand names and example values that read the same in both languages. */
+<<<<<<< HEAD
 const SAME_IN_BOTH = new Set(["TechLium", "Abidjan", "BIENVENUE10", "(PDF)", "Auto", "Total", "Code", "SKU"]);
+=======
+const SAME_IN_BOTH = new Set(["TechniLium", "Abidjan", "BIENVENUE10", "(PDF)", "Auto", "Total", "Code", "SKU"]);
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
 
 // tr("...") with a plain string literal (escaped quotes allowed).
 const TRANSLATED_LITERAL = /\btr\(("(?:[^"\\]|\\.)*")\)/g;

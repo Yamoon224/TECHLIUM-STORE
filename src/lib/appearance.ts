@@ -12,7 +12,11 @@ export interface Appearance {
   language: Language;
 }
 
+<<<<<<< HEAD
 export const STORAGE_KEY = "TechLium_store_appearance";
+=======
+export const STORAGE_KEY = "TechniLium_store_appearance";
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
 
 /** The brand orange first (the default), then a few alternatives. */
 export const ACCENT_COLORS = ["#f68b1e", "#2563eb", "#7c3aed", "#e11d48", "#059669", "#0e7490"] as const;

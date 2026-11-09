@@ -47,7 +47,11 @@ describe("showDeliveryCode", () => {
 
 describe("parcelLabel", () => {
   it("numbers the parcel and names its seller", () => {
+<<<<<<< HEAD
     expect(parcelLabel({ vendor_id: null }, 0)).toBe("Colis 1 - expédié par TechLium");
+=======
+    expect(parcelLabel({ vendor_id: null }, 0)).toBe("Colis 1 - expédié par TechniLium");
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
     expect(parcelLabel({ vendor_id: 7 }, 1)).toBe("Colis 2 - vendeur vérifié");
   });
 });

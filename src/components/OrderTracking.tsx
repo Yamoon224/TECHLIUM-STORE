@@ -113,7 +113,11 @@ function Tracking({ order, token }: { order: Order; token: string }) {
             return (
               <section key={parcel.id} className="flex flex-col gap-3 rounded-sm bg-surface p-4 shadow-card border-b-4 border-b-gold sm:p-6">
                 <div className="flex flex-wrap items-start justify-between gap-2">
+<<<<<<< HEAD
                   <h2 className="font-display text-base font-semibold text-ink"><Tr>Colis</Tr> {index + 1} - <Tr>{parcel.vendor_id === null ? "expédié par TechLium" : "vendeur vérifié"}</Tr>
+=======
+                  <h2 className="font-display text-base font-semibold text-ink"><Tr>Colis</Tr> {index + 1} - <Tr>{parcel.vendor_id === null ? "expédié par TechniLium" : "vendeur vérifié"}</Tr>
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
                   </h2>
                   <p className="text-sm font-medium text-ink">
                     {subtotal.amount} {subtotal.label}

@@ -23,7 +23,11 @@ const COLUMNS: { title: string; Icon: LucideIcon; links: { label: string; href: 
     ],
   },
   {
+<<<<<<< HEAD
     title: "Pourquoi TechLium",
+=======
+    title: "Pourquoi TechniLium",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
     Icon: ShieldCheck,
     links: [
       { label: "Produits vérifiés avant expédition", href: "/" },
@@ -56,7 +60,11 @@ export function SiteFooter() {
         ))}
       </div>
       <p className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/60">
+<<<<<<< HEAD
         <Tr>© TechLium - Produits tech authentiques, livrés chez vous.</Tr>
+=======
+        <Tr>© TechniLium - Produits tech authentiques, livrés chez vous.</Tr>
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
       </p>
     </footer>
   );

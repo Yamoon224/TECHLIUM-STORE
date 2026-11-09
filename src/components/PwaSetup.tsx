@@ -103,7 +103,11 @@ export function PwaSetup() {
       {waiting ? (
         <div role="status" className="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-w-md items-center gap-3 rounded-sm border border-line bg-surface p-3 text-sm text-ink shadow-lg">
           <RefreshCw className="h-5 w-5 shrink-0 text-gold" aria-hidden />
+<<<<<<< HEAD
           <span className="flex-1">{tr("Une nouvelle version de TechLium est disponible.")}</span>
+=======
+          <span className="flex-1">{tr("Une nouvelle version de TechniLium est disponible.")}</span>
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
           <button type="button" onClick={() => waiting.postMessage("SKIP_WAITING")} className="rounded-sm bg-gold px-3 py-1.5 text-xs font-medium text-on-primary">
             {tr("Mettre à jour")}
           </button>
@@ -111,7 +115,11 @@ export function PwaSetup() {
       ) : installEvent ? (
         <div role="dialog" aria-label={tr("Installer l'application")} className="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-w-md items-center gap-3 rounded-sm border border-line bg-surface p-3 text-sm text-ink shadow-lg">
           <Download className="h-5 w-5 shrink-0 text-gold" aria-hidden />
+<<<<<<< HEAD
           <span className="flex-1">{tr("Installez TechLium sur votre téléphone pour y accéder en un geste.")}</span>
+=======
+          <span className="flex-1">{tr("Installez TechniLium sur votre téléphone pour y accéder en un geste.")}</span>
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
           <button type="button" onClick={() => void install()} className="rounded-sm bg-gold px-3 py-1.5 text-xs font-medium text-on-primary">
             {tr("Installer")}
           </button>

@@ -21,12 +21,21 @@ export const PHRASES_EN: Record<string, string> = {
   "Connexion": "Sign in",
   "Mes commandes et factures": "My orders and invoices",
   "Mon panier": "My cart",
+<<<<<<< HEAD
   "Pourquoi TechLium": "Why TechLium",
   "Produits vérifiés avant expédition": "Products verified before shipping",
   "Garantie sur chaque appareil": "Warranty on every device",
   "© TechLium - Produits tech authentiques, livrés chez vous.": "© TechLium - Authentic tech products, delivered to your door.",
   "Tous les produits": "All products",
   "TechLium": "TechLium",
+=======
+  "Pourquoi TechniLium": "Why TechniLium",
+  "Produits vérifiés avant expédition": "Products verified before shipping",
+  "Garantie sur chaque appareil": "Warranty on every device",
+  "© TechniLium - Produits tech authentiques, livrés chez vous.": "© TechniLium - Authentic tech products, delivered to your door.",
+  "Tous les produits": "All products",
+  "TechniLium": "TechniLium",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   "Le marché tech où chaque produit est authentique et garanti": "The tech marketplace where every product is authentic and guaranteed",
   "Smartphones, ordinateurs et accessoires vérifiés avant expédition, livrés chez vous.": "Smartphones, computers and accessories verified before shipping, delivered to your door.",
   "Payez quand vous recevez": "Pay when you receive",
@@ -78,8 +87,13 @@ export const PHRASES_EN: Record<string, string> = {
   "Plus que": "Only",
   "en stock": "in stock",
   "Garantie de": "Warranty of",
+<<<<<<< HEAD
   "Vendu par un vendeur vérifié TechLium": "Sold by a verified TechLium vendor",
   "Vendu et expédié par TechLium": "Sold and shipped by TechLium",
+=======
+  "Vendu par un vendeur vérifié TechniLium": "Sold by a verified TechniLium vendor",
+  "Vendu et expédié par TechniLium": "Sold and shipped by TechniLium",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   "Détails du produit": "Product details",
   "Photos du produit": "Product photos",
   "Fermer l'annonce": "Close the announcement",
@@ -159,7 +173,11 @@ export const PHRASES_EN: Record<string, string> = {
   "article": "item",
   "Suivre cette commande en détail": "Track this order in detail",
   "Colis": "Parcel",
+<<<<<<< HEAD
   "expédié par TechLium": "shipped by TechLium",
+=======
+  "expédié par TechniLium": "shipped by TechniLium",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   "vendeur vérifié": "verified vendor",
   "Code de livraison :": "Delivery code:",
   "À ne donner au livreur qu'à la remise du colis.": "Only give it to the courier when you receive the parcel.",
@@ -257,7 +275,11 @@ export const PHRASES_EN: Record<string, string> = {
   "Le message n'a pas pu être envoyé.": "The message could not be sent.",
   "← Mes demandes": "← My requests",
   "Vous": "You",
+<<<<<<< HEAD
   "Support TechLium": "TechLium support",
+=======
+  "Support TechniLium": "TechniLium support",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   "Répondre": "Reply",
   "Cette demande est close. Ouvrez-en une nouvelle si besoin.": "This request is closed. Open a new one if needed.",
   "commande": "order",
@@ -373,7 +395,11 @@ export const PHRASES_EN: Record<string, string> = {
   "Service momentanément injoignable": "Service temporarily unreachable",
   "Notre serveur ne répond pas correctement. Réessayez dans un instant.": "Our server is not answering properly. Try again in a moment.",
   "Service indisponible": "Service unavailable",
+<<<<<<< HEAD
   "TechLium est en maintenance ou très sollicité. Réessayez dans quelques minutes.": "TechLium is under maintenance or very busy. Try again in a few minutes.",
+=======
+  "TechniLium est en maintenance ou très sollicité. Réessayez dans quelques minutes.": "TechniLium is under maintenance or very busy. Try again in a few minutes.",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   "Le serveur met trop de temps à répondre": "The server is taking too long to answer",
   "La réponse tarde trop. Réessayez dans un instant.": "The answer is taking too long. Try again in a moment.",
   "Erreur": "Error",
@@ -382,10 +408,17 @@ export const PHRASES_EN: Record<string, string> = {
   "Page précédente": "Previous page",
   "Référence de l'erreur :": "Error reference:",
   "Vous êtes hors connexion : certaines pages ne s'afficheront pas.": "You are offline: some pages will not load.",
+<<<<<<< HEAD
   "Une nouvelle version de TechLium est disponible.": "A new version of TechLium is available.",
   "Mettre à jour": "Update",
   "Installer l'application": "Install the app",
   "Installez TechLium sur votre téléphone pour y accéder en un geste.": "Install TechLium on your phone to open it in one tap.",
+=======
+  "Une nouvelle version de TechniLium est disponible.": "A new version of TechniLium is available.",
+  "Mettre à jour": "Update",
+  "Installer l'application": "Install the app",
+  "Installez TechniLium sur votre téléphone pour y accéder en un geste.": "Install TechniLium on your phone to open it in one tap.",
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   "Installer": "Install",
   "Plus tard": "Later",
 };

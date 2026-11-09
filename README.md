@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TechLium - Store
 
 Vitrine marketplace (clients) du projet TechLium : catalogue de produits technologiques, recherche, fiches produit - Afrique francophone, prix en F CFA.
@@ -5,6 +6,15 @@ Vitrine marketplace (clients) du projet TechLium : catalogue de produits technol
 Application NextJS **totalement autonome** : ses propres dépendances, son propre `src/components` et `src/lib`, rien d'importé depuis un autre dépôt. L'identité visuelle (palette noir/or, logo) est extraite du logo de marque Techlium Group et dupliquée à l'identique dans [TechLium-WEB-BACKOFFICE](https://github.com/Yamoon224/TechLium-WEB-BACKOFFICE), par choix - pas de package de design partagé.
 
 Dépôts liés : [TechLium-BACKEND](https://github.com/Yamoon224/TechLium-BACKEND) (API) · [TechLium-WEB-BACKOFFICE](https://github.com/Yamoon224/TechLium-WEB-BACKOFFICE)
+=======
+# TechniLium - Store
+
+Vitrine marketplace (clients) du projet TechniLium : catalogue de produits technologiques, recherche, fiches produit - Afrique francophone, prix en F CFA.
+
+Application NextJS **totalement autonome** : ses propres dépendances, son propre `src/components` et `src/lib`, rien d'importé depuis un autre dépôt. L'identité visuelle (palette noir/or, logo) est extraite du logo de marque Techlium Group et dupliquée à l'identique dans [TechniLium-WEB-BACKOFFICE](https://github.com/Yamoon224/TechniLium-WEB-BACKOFFICE), par choix - pas de package de design partagé.
+
+Dépôts liés : [TechniLium-BACKEND](https://github.com/Yamoon224/TechniLium-BACKEND) (API) · [TechniLium-WEB-BACKOFFICE](https://github.com/Yamoon224/TechniLium-WEB-BACKOFFICE)
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
 
 ## Stack
 
@@ -15,7 +25,11 @@ Dépôts liés : [TechLium-BACKEND](https://github.com/Yamoon224/TechLium-BACKEN
 
 ## Démarrage rapide
 
+<<<<<<< HEAD
 Nécessite le backend [TechLium-BACKEND](https://github.com/Yamoon224/TechLium-BACKEND) démarré sur `http://localhost:8000`.
+=======
+Nécessite le backend [TechniLium-BACKEND](https://github.com/Yamoon224/TechniLium-BACKEND) démarré sur `http://localhost:8000`.
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
 
 ```bash
 npm install
@@ -49,7 +63,11 @@ npm run generate:api-client
 - `/` - accueil façon place de marché : menu des catégories à gauche, bannière et engagements, rayon « Ventes Flash » (offres avec prix barré et pastille -X %, plus forte remise d'abord), un rayon par catégorie avec « Voir plus » ; recherche et filtre affichent une grille de résultats. En-tête et pied de page communs à toutes les pages (layout).
 - `/produits/[slug]` - fiche produit détaillée (prix, garantie, caractéristiques, vendeur), ajout au panier respectant le stock.
 - `/panier` - panier (localStorage) : quantités, suppression, sous-total.
+<<<<<<< HEAD
 - **Catalogue en anglais** : noms, descriptions et catégories s'affichent dans la langue choisie quand l'équipe a saisi l'anglais (sinon le français). La langue est aussi gardée dans un cookie (`TechLium_lang`) pour que les pages rendues côté serveur interrogent l'API dans la bonne langue ; le changement de langue rafraîchit ces pages. Le panier garde le nom tel qu'il était à l'ajout.
+=======
+- **Catalogue en anglais** : noms, descriptions et catégories s'affichent dans la langue choisie quand l'équipe a saisi l'anglais (sinon le français). La langue est aussi gardée dans un cookie (`TechniLium_lang`) pour que les pages rendues côté serveur interrogent l'API dans la bonne langue ; le changement de langue rafraîchit ces pages. Le panier garde le nom tel qu'il était à l'ajout.
+>>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
 - **Reçus de paiement** : sur la page de suivi, les reçus des paiements encaissés sont téléchargeables en PDF (dans la langue de la commande).
 - `/aide` - **centre d'aide public** (FAQ sans compte : commander, payer, suivre, code de livraison, colis, retours avec le vrai délai, factures, messages ; contacts affichés seulement s'ils sont configurés côté serveur) ; la demande au support (connecté) est sur `/support`.
 - `/suivi` - suivi sans compte : numéro de commande, puis le téléphone utilisé (jamais dans l'URL).
