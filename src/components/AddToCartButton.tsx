@@ -2,7 +2,8 @@
 
 import { Tr } from "@/components/Tr";
 import { useState } from "react";
-import { ShoppingCart } from "lucide-react";
+import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { useAppearance } from "./AppearanceProvider";
 import { useCart } from "./CartProvider";
 import type { CurrencyCode } from "@/lib/money";
 
@@ -30,7 +31,8 @@ export function AddToCartButton({
   imageUrl,
   compact = false,
 }: AddToCartButtonProps) {
-  const { add, items } = useCart();
+  const { add, items, updateQuantity } = useCart();
+  const { tr } = useAppearance();
   const [added, setAdded] = useState(false);
 
   const alreadyInCart = items.find((line) => line.offerId === offerId)?.quantity ?? 0;
@@ -56,6 +58,25 @@ export function AddToCartButton({
       >
         <Tr>Rupture de stock</Tr>
       </button>
+    );
+  }
+
+  // Already in the cart: the quantity is changed here, the product is not added a second time.
+  if (alreadyInCart > 0) {
+    const stepper = `flex items-center justify-center rounded-sm border border-line text-ink transition-colors hover:border-gold disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line ${compact ? "h-8 w-8" : "h-10 w-10"}`;
+
+    return (
+      <div className="flex w-full items-center justify-between gap-2" role="group" aria-label={tr("Quantité dans le panier")}>
+        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart - 1)} disabled={alreadyInCart <= 1} aria-label={tr("Diminuer la quantité")} className={stepper}>
+          <Minus className="h-4 w-4" aria-hidden />
+        </button>
+        <span className={`min-w-8 text-center font-medium text-ink ${compact ? "text-xs" : "text-sm"}`} aria-live="polite">
+          {alreadyInCart}
+        </span>
+        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart + 1)} disabled={atStockLimit} aria-label={tr("Augmenter la quantité")} className={stepper}>
+          <Plus className="h-4 w-4" aria-hidden />
+        </button>
+      </div>
     );
   }
 

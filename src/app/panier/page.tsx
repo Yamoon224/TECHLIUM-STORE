@@ -68,7 +68,8 @@ export default function CartPage() {
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.offerId, item.quantity - 1)}
-                        className="h-8 w-8 rounded-sm border border-line text-ink hover:border-gold"
+                        disabled={item.quantity <= 1}
+                        className="h-8 w-8 rounded-sm border border-line text-ink hover:border-gold disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line"
                         aria-label={tr("Diminuer la quantité")}
                       >
                         −

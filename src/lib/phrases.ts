@@ -384,6 +384,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Retour à l'accueil": "Back to home",
   "Page précédente": "Previous page",
   "Page suivante": "Next page",
+  "Quantité dans le panier": "Quantity in cart",
   "Référence de l'erreur :": "Error reference:",
   "Vous êtes hors connexion : certaines pages ne s'afficheront pas.": "You are offline: some pages will not load.",
   "Une nouvelle version de TechLium est disponible.": "A new version of TechLium is available.",
