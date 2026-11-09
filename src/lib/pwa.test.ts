@@ -43,7 +43,7 @@ describe("canRegisterServiceWorker", () => {
 });
 
 describe("service worker strategy", () => {
-  const origin = "https://TechLium.example";
+  const origin = "https://techlium.example";
   const get = (path: string, mode = "cors") => ({ method: "GET", url: `${origin}${path}`, mode });
 
   it("never keeps a page: navigations go to the network, with the offline page as fallback", () => {
@@ -59,7 +59,7 @@ describe("service worker strategy", () => {
 
   it("leaves everything else to the network: data, other origins, writes", () => {
     expect(strategyFor(get("/produits/12"), origin)).toBe("network");
-    expect(strategyFor({ method: "GET", url: "https://api.TechLium.example/api/v1/orders/mine", mode: "cors" }, origin)).toBe("network");
+    expect(strategyFor({ method: "GET", url: "https://api.techlium.example/api/v1/orders/mine", mode: "cors" }, origin)).toBe("network");
     expect(strategyFor({ method: "POST", url: `${origin}/_next/static/x.js`, mode: "cors" }, origin)).toBe("network");
     expect(strategyFor({ method: "POST", url: `${origin}/compte`, mode: "navigate" }, origin)).toBe("network");
   });

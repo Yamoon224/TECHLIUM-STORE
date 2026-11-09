@@ -6,7 +6,7 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1";
 
-export type BannerPlacement = "hero" | "footer";
+export type BannerPlacement = "hero" | "footer" | "left" | "right";
 
 export interface BannerSlide {
   id: number;

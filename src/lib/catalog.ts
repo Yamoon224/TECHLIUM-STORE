@@ -64,6 +64,7 @@ export interface Product {
 
 interface Paginated<T> {
   data: T[];
+  meta?: { current_page: number; last_page: number; total: number };
 }
 
 async function fetchJson<T>(path: string): Promise<T> {
@@ -99,6 +100,31 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
   const query = params.size > 0 ? `?${params.toString()}` : "";
   const page = await fetchJson<Paginated<Product>>(`/catalog/products${query}`);
   return page.data;
+}
+
+export interface ProductPage {
+  products: Product[];
+  page: number;
+  lastPage: number;
+  total: number;
+}
+
+/** One page of the filtered catalogue, for the paginated category and search pages. */
+export async function getProductsPage(filters: ProductFilters, page: number, perPage: number): Promise<ProductPage> {
+  const params = new URLSearchParams();
+  if (filters.category) params.set("category", filters.category);
+  if (filters.search) params.set("search", filters.search);
+  if (filters.language === "en") params.set("lang", "en");
+  params.set("page", String(page));
+  params.set("per_page", String(perPage));
+
+  const result = await fetchJson<Paginated<Product>>(`/catalog/products?${params.toString()}`);
+  return {
+    products: result.data,
+    page: result.meta?.current_page ?? page,
+    lastPage: Math.max(1, result.meta?.last_page ?? 1),
+    total: result.meta?.total ?? result.data.length,
+  };
 }
 
 /** Returns null when the product doesn't exist or isn't published (404). */

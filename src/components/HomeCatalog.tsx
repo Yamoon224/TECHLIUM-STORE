@@ -5,8 +5,11 @@ import { getBanners, type BannerSlide } from "@/lib/banners";
 import Link from "next/link";
 import { CategoryRail } from "@/components/CategoryRail";
 import { ProductCard } from "@/components/ProductCard";
+import { ShelfControls } from "@/components/ShelfControls";
 import { cookies } from "next/headers";
-import { getCategories, getProducts, type Category, type Product } from "@/lib/catalog";
+import { getCategories, getProducts, getProductsPage, type Category, type Product } from "@/lib/catalog";
+import { Pagination } from "@/components/Pagination";
+import { parsePage, PRODUCTS_PER_PAGE } from "@/lib/pagination";
 import { LANGUAGE_COOKIE, parseLanguage } from "@/lib/language";
 import { categoryRows, flashDeals } from "@/lib/home";
 
@@ -23,13 +26,25 @@ export async function HomeCatalog({ searchParams }: Pick<PageProps<"/">, "search
   let categories: Category[] = [];
   let products: Product[] = [];
   let catalogUnavailable = false;
+  let pageInfo = { page: 1, lastPage: 1 };
+  const wantedPage = parsePage(params.page);
   const heroSlides = category || search ? [] : await getBanners("hero");
 
   try {
-    [categories, products] = await Promise.all([
-      getCategories(language),
-      getProducts({ category, search, language }),
-    ]);
+    if (category || search) {
+      // A category or a search is paginated, PRODUCTS_PER_PAGE at a time.
+      const filters = { category, search, language };
+      let result;
+      [categories, result] = await Promise.all([getCategories(language), getProductsPage(filters, wantedPage, PRODUCTS_PER_PAGE)]);
+      // A page number past the end shows the last page rather than nothing.
+      if (result.products.length === 0 && wantedPage > result.lastPage) {
+        result = await getProductsPage(filters, result.lastPage, PRODUCTS_PER_PAGE);
+      }
+      products = result.products;
+      pageInfo = { page: result.page, lastPage: result.lastPage };
+    } else {
+      [categories, products] = await Promise.all([getCategories(language), getProducts({ language })]);
+    }
   } catch {
     catalogUnavailable = true;
   }
@@ -52,12 +67,15 @@ export async function HomeCatalog({ searchParams }: Pick<PageProps<"/">, "search
           ) : products.length === 0 ? (
             <EmptyState search={search} categoryName={activeCategoryName} />
           ) : filtered ? (
-            <Shelf
-              title={search ? "Résultats pour" : (activeCategoryName ?? "Produits")}
-              suffix={search ? ` « ${search} »` : undefined}
-              products={products}
-              grid
-            />
+            <>
+              <Shelf
+                title={search ? "Résultats pour" : (activeCategoryName ?? "Produits")}
+                suffix={search ? ` « ${search} »` : undefined}
+                products={products}
+                grid
+              />
+              <Pagination page={pageInfo.page} lastPage={pageInfo.lastPage} params={{ category, search }} />
+            </>
           ) : (
             <Shelves products={products} />
           )}
@@ -106,7 +124,7 @@ function Hero({ slides }: { slides: BannerSlide[] }) {
 }
 
 function Shelves({ products }: { products: Product[] }) {
-  const deals = flashDeals(products);
+  const deals = flashDeals(products, 12);
   const rows = categoryRows(products);
 
   return (
@@ -142,7 +160,7 @@ function Shelf({
     <section className={`overflow-hidden rounded-sm bg-surface shadow-card border-b-4 ${accent ? "border-b-[#e11d48]" : "border-b-gold"}`}>
       {/* The flash sale keeps its own hot colours, whatever accent colour the visitor picked. */}
       <div
-        className={`flex items-center justify-between px-4 py-2.5 ${accent ? "text-white" : "border-b border-line text-ink"}`}
+        className={`flex items-center justify-between gap-3 px-4 py-2.5 ${accent ? "text-white" : "border-b border-line text-ink"}`}
         style={accent ? { backgroundImage: "linear-gradient(100deg, #e11d48 0%, #be123c 45%, #7e22ce 100%)" } : undefined}
       >
         <h2 className="flex items-center gap-2 font-display text-base font-semibold">
@@ -152,6 +170,7 @@ function Shelf({
           <Tr>{title}</Tr>
           {suffix}
         </h2>
+        {accent ? <ShelfControls target="flash-deals-row" /> : null}
         {href ? (
           <Link href={href} className={`text-sm font-medium underline-offset-4 hover:underline ${accent ? "" : "text-gold-bright"}`}>
             <Tr>Voir plus</Tr>
@@ -159,17 +178,28 @@ function Shelf({
         ) : null}
       </div>
 
-      <div
-        className={
-          grid
-            ? "grid grid-cols-2 gap-2 bg-bg p-2 sm:grid-cols-3 lg:grid-cols-4"
-            : "grid grid-cols-2 gap-2 bg-bg p-2 sm:grid-cols-3 lg:grid-cols-6"
-        }
-      >
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {accent ? (
+        // The flash sale is one scrolling row, moved one product at a time by the header buttons.
+        <div id="flash-deals-row" className="flex gap-2 overflow-x-auto scroll-smooth bg-bg p-2 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {products.map((product) => (
+            <div key={product.id} className="w-[calc((100%-0.5rem)/2)] flex-none snap-start sm:w-[calc((100%-1rem)/3)] lg:w-[calc((100%-2.5rem)/6)] [&>*]:h-full">
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div
+          className={
+            grid
+              ? "grid grid-cols-2 gap-2 bg-bg p-2 sm:grid-cols-3 lg:grid-cols-4"
+              : "grid grid-cols-2 gap-2 bg-bg p-2 sm:grid-cols-3 lg:grid-cols-6"
+          }
+        >
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
