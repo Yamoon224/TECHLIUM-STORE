@@ -4,13 +4,8 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-<<<<<<< HEAD
     name: "TechLium - Produits tech authentiques",
     short_name: "TechLium",
-=======
-    name: "TechniLium - Produits tech authentiques",
-    short_name: "TechniLium",
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
     description: "Smartphones, ordinateurs et accessoires vérifiés, avec garantie et paiement à la livraison.",
     lang: "fr",
     start_url: "/?source=pwa",

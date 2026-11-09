@@ -317,11 +317,7 @@ function Conversation({
             }`}
           >
             <p className="mb-1 text-xs text-ink-soft">
-<<<<<<< HEAD
               {message.from === "customer" ? <Tr>Vous</Tr> : <Tr>Support TechLium</Tr>}
-=======
-              {message.from === "customer" ? <Tr>Vous</Tr> : <Tr>Support TechniLium</Tr>}
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
             </p>
             <p className="whitespace-pre-wrap text-ink">{message.body}</p>
           </li>

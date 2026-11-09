@@ -26,11 +26,7 @@ export interface Money {
 
 export interface Offer {
   id: number;
-<<<<<<< HEAD
   seller: "TechLium" | "vendor";
-=======
-  seller: "TechniLium" | "vendor";
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
   vendor_id: number | null;
   price: Money;
   compare_at_price: Money | null;

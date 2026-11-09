@@ -53,11 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [hasStoredToken]);
 
   async function login(email: string, password: string) {
-<<<<<<< HEAD
     const result = await loginRequest(email, password, "TechLium-store-web");
-=======
-    const result = await loginRequest(email, password, "TechniLium-store-web");
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
     localStorage.setItem(TOKEN_STORAGE_KEY, result.token);
     setToken(result.token);
     setUser(result.user);

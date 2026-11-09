@@ -34,13 +34,8 @@ export async function getCurrentAnnouncement(): Promise<Announcement | null> {
   }
 }
 
-<<<<<<< HEAD
 export const STATE_KEY = "TechLium_announcement_state";
 export const SESSION_KEY = "TechLium_announcement_session";
-=======
-export const STATE_KEY = "TechniLium_announcement_state";
-export const SESSION_KEY = "TechniLium_announcement_session";
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
 
 /** What a browser remembers about one announcement (localStorage). */
 export interface DisplayState {

@@ -30,11 +30,7 @@ export function SiteHeader() {
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
         <Link href="/" aria-labelledby="home-link-title" className="shrink-0">
           <span id="home-link-title" className="sr-only">
-<<<<<<< HEAD
             TechLium, <Tr>accueil</Tr>
-=======
-            TechniLium, <Tr>accueil</Tr>
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
           </span>
           <LogoMark hideNameOnMobile />
         </Link>

@@ -77,17 +77,10 @@ function Hero({ slides }: { slides: BannerSlide[] }) {
   return (
     <section className="grid gap-4 md:grid-cols-[1fr_220px]" aria-labelledby="hero-title">
       {slides.length > 0 ? (
-<<<<<<< HEAD
         <BannerCarousel slides={slides} label="TechLium" />
       ) : (
       <div className="flex min-h-48 flex-col justify-center gap-3 rounded-sm bg-gold p-6 text-white sm:p-8">
         <p className="text-sm font-medium uppercase tracking-wide opacity-90"><Tr>TechLium</Tr></p>
-=======
-        <BannerCarousel slides={slides} label="TechniLium" />
-      ) : (
-      <div className="flex min-h-48 flex-col justify-center gap-3 rounded-sm bg-gold p-6 text-white sm:p-8">
-        <p className="text-sm font-medium uppercase tracking-wide opacity-90"><Tr>TechniLium</Tr></p>
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
         <h1 id="hero-title" className="font-display text-2xl font-bold leading-tight sm:text-4xl">
           <Tr>Le marché tech où chaque produit est authentique et garanti</Tr>
         </h1>

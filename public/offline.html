@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#f68b1e" />
-<<<<<<< HEAD
     <title>Hors connexion - TechLium</title>
-=======
-    <title>Hors connexion - TechniLium</title>
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
     <style>
       :root { color-scheme: light dark; --bg: #ffffff; --ink: #1f2937; --soft: #6b7280; --accent: #f68b1e; }
       @media (prefers-color-scheme: dark) { :root { --bg: #0b0f19; --ink: #f3f4f6; --soft: #9ca3af; } }
@@ -28,28 +24,17 @@
       <img src="/icon-192.png" alt="" width="72" height="72" />
       <p class="code" aria-hidden="true">Hors ligne</p>
       <h1 id="title">Vous êtes hors connexion</h1>
-<<<<<<< HEAD
       <p id="text">TechLium a besoin d'internet pour afficher les produits et votre compte. Vérifiez votre connexion, puis réessayez.</p>
-=======
-      <p id="text">TechniLium a besoin d'internet pour afficher les produits et votre compte. Vérifiez votre connexion, puis réessayez.</p>
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
       <button id="retry" type="button">Réessayer</button>
     </main>
     <script>
       (function () {
         if ((navigator.language || "fr").toLowerCase().indexOf("fr") !== 0) {
           document.documentElement.lang = "en";
-<<<<<<< HEAD
           document.title = "Offline - TechLium";
           document.querySelector(".code").textContent = "Offline";
           document.getElementById("title").textContent = "You are offline";
           document.getElementById("text").textContent = "TechLium needs the internet to show products and your account. Check your connection, then try again.";
-=======
-          document.title = "Offline - TechniLium";
-          document.querySelector(".code").textContent = "Offline";
-          document.getElementById("title").textContent = "You are offline";
-          document.getElementById("text").textContent = "TechniLium needs the internet to show products and your account. Check your connection, then try again.";
->>>>>>> dde13f7e9ef378354971238907150faefa52b6bb
           document.getElementById("retry").textContent = "Try again";
         }
         document.getElementById("retry").addEventListener("click", function () { location.reload(); });
