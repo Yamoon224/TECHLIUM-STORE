@@ -22,7 +22,7 @@ export const ERROR_PAGES: readonly ErrorInfo[] = [
   { code: 429, title: "Trop de demandes", message: "Vous avez fait beaucoup de demandes en peu de temps. Patientez un instant, puis réessayez.", retryable: true },
   { code: 500, title: "Erreur du serveur", message: "Un problème est survenu de notre côté. Réessayez dans un instant.", retryable: true },
   { code: 502, title: "Service momentanément injoignable", message: "Notre serveur ne répond pas correctement. Réessayez dans un instant.", retryable: true },
-  { code: 503, title: "Service indisponible", message: "Technilium est en maintenance ou très sollicité. Réessayez dans quelques minutes.", retryable: true },
+  { code: 503, title: "Service indisponible", message: "TechLium est en maintenance ou très sollicité. Réessayez dans quelques minutes.", retryable: true },
   { code: 504, title: "Le serveur met trop de temps à répondre", message: "La réponse tarde trop. Réessayez dans un instant.", retryable: true },
 ];
 

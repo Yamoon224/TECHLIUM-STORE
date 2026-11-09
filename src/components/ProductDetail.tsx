@@ -145,11 +145,11 @@ export async function ProductDetail({ params }: Pick<PageProps<"/produits/[slug]
               <li className="flex items-center gap-2.5">
                 {offer.seller === "vendor" ? (
                   <>
-                    <BadgeCheck className="h-5 w-5 shrink-0 text-gold" aria-hidden /> <Tr>Vendu par un vendeur vérifié Technilium</Tr>
+                    <BadgeCheck className="h-5 w-5 shrink-0 text-gold" aria-hidden /> <Tr>Vendu par un vendeur vérifié TechLium</Tr>
                   </>
                 ) : (
                   <>
-                    <Store className="h-5 w-5 shrink-0 text-gold" aria-hidden /> <Tr>Vendu et expédié par Technilium</Tr>
+                    <Store className="h-5 w-5 shrink-0 text-gold" aria-hidden /> <Tr>Vendu et expédié par TechLium</Tr>
                   </>
                 )}
               </li>

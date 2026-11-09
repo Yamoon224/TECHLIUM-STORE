@@ -1,6 +1,6 @@
 import type { CurrencyCode } from "./money";
 
-export const CART_STORAGE_KEY = "technilium_cart";
+export const CART_STORAGE_KEY = "TechLium_cart";
 
 export interface CartItem {
   offerId: number;

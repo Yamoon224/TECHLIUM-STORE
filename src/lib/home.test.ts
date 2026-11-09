@@ -16,7 +16,7 @@ function product(id: number, price: number, compare: number | null, category = "
     variants: [],
     best_offer: {
       id,
-      seller: "technilium",
+      seller: "TechLium",
       vendor_id: null,
       price: { amount: price, currency: "XOF" },
       compare_at_price: compare === null ? null : { amount: compare, currency: "XOF" },

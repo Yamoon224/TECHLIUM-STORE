@@ -17,7 +17,7 @@ export default function GlobalError({ error, retry }: { error: unknown; retry: (
   return (
     <html lang={english ? "en" : "fr"}>
       <body style={{ margin: 0, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif", textAlign: "center", background: "#ffffff", color: "#1f2937" }}>
-        <title>{english ? "Error 500 - Technilium" : "Erreur 500 - Technilium"}</title>
+        <title>{english ? "Error 500 - TechLium" : "Erreur 500 - TechLium"}</title>
         <main style={{ maxWidth: 420 }}>
           <p style={{ margin: 0, fontSize: 80, fontWeight: 700, color: "#f68b1e" }}>500</p>
           <h1 style={{ fontSize: 24, margin: "8px 0" }}>{english ? "Server error" : "Erreur du serveur"}</h1>

@@ -3,7 +3,7 @@
  * shop runs as an installed app already. Pure, so they are tested without a browser.
  */
 
-export const INSTALL_DISMISSED_KEY = "technilium_install_dismissed_at";
+export const INSTALL_DISMISSED_KEY = "TechLium_install_dismissed_at";
 
 /** A visitor who closed the invitation is not asked again for two weeks. */
 export const INSTALL_REASK_AFTER_MS = 14 * 24 * 60 * 60 * 1000;

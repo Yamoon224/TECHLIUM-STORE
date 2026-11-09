@@ -6,7 +6,7 @@
 
 import type { Language } from "./appearance";
 
-export const LANGUAGE_COOKIE = "technilium_lang";
+export const LANGUAGE_COOKIE = "TechLium_lang";
 const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 
 export function parseLanguage(value: string | null | undefined): Language {
