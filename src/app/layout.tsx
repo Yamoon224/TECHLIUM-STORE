@@ -59,7 +59,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <PwaSetup />
             <CartProvider>
               <SiteHeader />
-              <BackToMarketplace />
+              <Suspense fallback={null}>
+                <BackToMarketplace />
+              </Suspense>
               <div className="flex flex-1 flex-col">{children}</div>
               <Suspense fallback={null}>
                 <FooterBanner />
