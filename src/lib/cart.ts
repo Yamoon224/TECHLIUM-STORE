@@ -70,7 +70,7 @@ export function removeFromCart(items: CartItem[], offerId: number): CartItem[] {
 }
 
 export function cartCount(items: CartItem[]): number {
-  return items.reduce((total, line) => total + line.quantity, 0);
+  return items.length;
 }
 
 export function cartSubtotalAmount(items: CartItem[]): number {
