@@ -68,13 +68,13 @@ describe("removeFromCart", () => {
 });
 
 describe("cartCount and cartSubtotalAmount", () => {
-  it("sums quantities and amounts across lines", () => {
+  it("counts distinct articles and sums amounts across lines", () => {
     const cart = [
       { ...item({ offerId: 1, priceAmount: 100 }), quantity: 2 },
       { ...item({ offerId: 2, priceAmount: 50 }), quantity: 3 },
     ];
 
-    expect(cartCount(cart)).toBe(5);
+    expect(cartCount(cart)).toBe(2);
     expect(cartSubtotalAmount(cart)).toBe(100 * 2 + 50 * 3);
   });
 
