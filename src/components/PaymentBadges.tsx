@@ -1,6 +1,10 @@
+"use client";
+
 import { Banknote } from "lucide-react";
 import { Tr } from "@/components/Tr";
-import { ACCEPTED_PAYMENTS, type PaymentBadgeId } from "@/lib/social";
+import { useShop } from "@/components/ShopInfoProvider";
+import type { PaymentBadgeId } from "@/lib/shop";
+import { PAYMENT_LABELS } from "@/lib/social";
 
 const TILE = "flex h-10 w-14 items-center justify-center overflow-hidden rounded-lg";
 
@@ -40,8 +44,13 @@ function Badge({ id }: { id: PaymentBadgeId }) {
 
 /** "Paiement accepté": the means of payment, scrolling sideways in a loop (see .brand-marquee). */
 export function PaymentBadges() {
+  const shop = useShop();
+  // The means of payment the shop chose in the backoffice; none chosen (or not loaded yet), no strip.
+  const accepted = shop?.payment_methods ?? [];
+  if (accepted.length === 0) return null;
+
   // Repeated so one half is wider than any screen; two halves make the loop seamless.
-  const half = Array.from({ length: 3 }, () => ACCEPTED_PAYMENTS).flat();
+  const half = Array.from({ length: Math.ceil(9 / accepted.length) }, () => accepted).flat();
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -52,10 +61,10 @@ export function PaymentBadges() {
         <div className="brand-marquee-track flex w-max" style={{ animationDuration: `${half.length * 2.5}s` }}>
           {[0, 1].map((copy) => (
             <ul key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1 ? true : undefined}>
-              {half.map((payment, index) => (
-                <li key={`${payment.id}-${index}`} title={payment.label} className="px-1.5">
-                  <Badge id={payment.id} />
-                  <span className="sr-only">{payment.label}</span>
+              {half.map((id, index) => (
+                <li key={`${id}-${index}`} title={PAYMENT_LABELS[id]} className="px-1.5">
+                  <Badge id={id} />
+                  <span className="sr-only">{PAYMENT_LABELS[id]}</span>
                 </li>
               ))}
             </ul>

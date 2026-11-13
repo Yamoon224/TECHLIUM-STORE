@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { BackToMarketplace } from "@/components/BackToMarketplace";
 import { FooterBanner } from "@/components/FooterBanner";
 import { SideBanners } from "@/components/SideBanners";
+import { ShopInfoProvider } from "@/components/ShopInfoProvider";
 import { ChatAssistant } from "@/components/ChatAssistant";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -58,21 +59,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <AuthProvider>
             <AccountPreferencesSync />
             <PwaSetup />
-            <CartProvider>
-              <SiteHeader />
-              <Suspense fallback={null}>
-                <BackToMarketplace />
-              </Suspense>
-              <div className="flex flex-1 flex-col">{children}</div>
-              <Suspense fallback={null}>
-                <FooterBanner />
-              </Suspense>
-              <SiteFooter />
-              <ChatAssistant />
-              <Suspense fallback={null}>
-                <SideBanners />
-              </Suspense>
-            </CartProvider>
+            <ShopInfoProvider>
+              <CartProvider>
+                <SiteHeader />
+                <Suspense fallback={null}>
+                  <BackToMarketplace />
+                </Suspense>
+                <div className="flex flex-1 flex-col">{children}</div>
+                <Suspense fallback={null}>
+                  <FooterBanner />
+                </Suspense>
+                <SiteFooter />
+                <ChatAssistant />
+                <Suspense fallback={null}>
+                  <SideBanners />
+                </Suspense>
+              </CartProvider>
+            </ShopInfoProvider>
           </AuthProvider>
         </AppearanceProvider>
       </body>

@@ -9,6 +9,7 @@ import { ProductTile } from "@/components/ProductTile";
 import { reply, type AssistantFacts, type AssistantLink } from "@/lib/assistant";
 import { getProducts, type Product } from "@/lib/catalog";
 import { finderCategories } from "@/lib/finder";
+import { useShop } from "@/components/ShopInfoProvider";
 import { getHelpInfo } from "@/lib/help";
 import { formatMoneyParts } from "@/lib/money";
 
@@ -34,13 +35,14 @@ const LINK_CLASS =
 export function ChatAssistant() {
   const { appearance, tr } = useAppearance();
   const language = appearance.language;
+  const shop = useShop();
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [facts, setFacts] = useState<AssistantFacts>({});
+  const [returnWindowDays, setReturnWindowDays] = useState<number | undefined>(undefined);
   const loaded = useRef(false);
   const nextId = useRef(1);
   const timer = useRef<number | null>(null);
@@ -53,17 +55,22 @@ export function ChatAssistant() {
     loaded.current = true;
 
     getProducts({ language, perPage: 100 }).then(setProducts).catch(() => setProducts([]));
-    getHelpInfo().then((info) => {
-      if (!info) return;
-      setFacts({
-        returnWindowDays: info.return_window_days,
-        whatsapp: info.contact.whatsapp || undefined,
-        phone: info.contact.phone || undefined,
-        email: info.contact.email || undefined,
-        hours: info.contact.hours || undefined,
-      });
-    });
+    getHelpInfo().then((info) => setReturnWindowDays(info?.return_window_days));
   }, [open, language]);
+
+  // What the shop says about itself comes from the backoffice (see ShopInfoProvider).
+  const facts = useMemo<AssistantFacts>(
+    () => ({
+      returnWindowDays,
+      whatsapp: shop?.contact.whatsapp,
+      phone: shop?.contact.phone,
+      email: shop?.contact.email,
+      hours: shop?.contact.hours,
+      address: shop?.address ?? undefined,
+      deliveryInfo: shop?.delivery_info ?? undefined,
+    }),
+    [returnWindowDays, shop],
+  );
 
   useEffect(() => {
     if (open) field.current?.focus();

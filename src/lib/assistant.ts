@@ -10,6 +10,9 @@ export interface AssistantFacts {
   phone?: string;
   email?: string;
   hours?: string;
+  address?: string;
+  /** What the shop wrote about delivery (time, cost, areas), in the visitor's language. */
+  deliveryInfo?: string;
 }
 
 export interface AssistantLink {
@@ -158,7 +161,8 @@ export function reply(question: string, products: readonly Product[], facts: Ass
       return say(t(lang, "Salut ! Dis-moi ce que tu cherches : un modèle, un budget, ou une info sur la livraison.", "Hi! Tell me what you are looking for: a model, a budget, or some delivery info."));
     case "delivery":
       return say(
-        t(
+        facts.deliveryInfo ??
+          t(
           lang,
           "On livre à l'adresse que tu indiques à la commande, et tu paies à la réception. Pour le délai et le tarif selon ton quartier, le plus sûr est de nous écrire.",
           "We deliver to the address you give when ordering, and you pay on receipt. For the time and cost in your area, the surest way is to write to us.",
@@ -219,9 +223,14 @@ export function reply(question: string, products: readonly Product[], facts: Ass
       );
     }
     case "location":
-      return say(t(lang, "Retrouve notre boutique sur la carte, avec l'itinéraire.", "Find our shop on the map, with directions."), [
-        { label: t(lang, "Voir la boutique", "See the shop"), href: "/boutique" },
-      ]);
+      return say(
+        [facts.address, facts.hours, t(lang, "Retrouve notre boutique sur la carte, avec l'itinéraire.", "Find our shop on the map, with directions.")]
+          .filter(Boolean)
+          .join("\n"),
+        [
+          { label: t(lang, "Voir la boutique", "See the shop"), href: "/boutique" },
+        ],
+      );
     default:
       break;
   }

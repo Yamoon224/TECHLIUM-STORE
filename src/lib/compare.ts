@@ -14,6 +14,11 @@ export interface CompareRange {
   count: number;
 }
 
+/** "Dahua" + "Dahua Caméra dôme" is "Dahua Caméra dôme", not "Dahua Dahua Caméra dôme": a name that already starts with its brand is not prefixed again. */
+export function modelName(product: Pick<Product, "brand" | "name">): string {
+  return product.name.toLowerCase().startsWith(product.brand.toLowerCase()) ? product.name : `${product.brand} ${product.name}`;
+}
+
 /** Products that have a price: the only ones worth putting side by side. */
 function priced(products: readonly Product[]): Product[] {
   return products.filter((product) => product.best_offer);
@@ -130,6 +135,8 @@ export function specRows(products: readonly Product[]): SpecRow[] {
   specs.forEach((spec, index) => {
     for (const key of Object.keys(spec)) {
       if (key === "color" && (products[index]?.colors?.length ?? 0) > 0) continue;
+      // The range is already the one chosen in step 2, so its raw category key says nothing new.
+      if (key === "category") continue;
       if (!keys.includes(key)) keys.push(key);
     }
   });

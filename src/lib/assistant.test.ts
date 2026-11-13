@@ -132,6 +132,17 @@ describe("reply", () => {
     expect(answer.links[0]?.href).toBe("https://wa.me/225070000000000".replace("225070000000000", "2250700000000"));
   });
 
+  it("answers about delivery with the shop's own wording when it wrote one", () => {
+    expect(reply("livraison", catalogue, { deliveryInfo: "Sous 24 h à Abidjan." }, "fr").text).toBe("Sous 24 h à Abidjan.");
+    expect(reply("livraison", catalogue, {}, "fr").text).toContain("On livre à l'adresse");
+  });
+
+  it("gives the address and hours when asked where the shop is", () => {
+    const answer = reply("où est la boutique", catalogue, { address: "Treichville", hours: "8h-19h" }, "fr");
+    expect(answer.text).toContain("Treichville");
+    expect(answer.text).toContain("8h-19h");
+  });
+
   it("does not guess a return window it was not given", () => {
     expect(reply("retour", catalogue, {}, "fr").text).not.toMatch(/\d jours/);
   });

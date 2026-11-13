@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { Tr } from "@/components/Tr";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { ProductTile } from "@/components/ProductTile";
+import { SearchSelect } from "@/components/SearchSelect";
 import type { Product } from "@/lib/catalog";
-import { brandRanges, compareBrands, COMPARE_SLOTS, defaultPicks, rangeModels, specRows } from "@/lib/compare";
+import { brandRanges, compareBrands, COMPARE_SLOTS, defaultPicks, modelName, rangeModels, specRows } from "@/lib/compare";
 import { formatMoneyParts } from "@/lib/money";
 
 const CONDITION_LABEL: Record<Product["condition_state"], string> = {
@@ -108,28 +108,32 @@ export function ProductComparator({ products }: { products: Product[] }) {
 
               return (
                 <div key={column} className="flex flex-col items-center gap-3">
-                  <div className="relative w-full">
-                    <select
+                  <label className="field w-full">
+                    <SearchSelect
                       value={model.id}
                       onChange={(event) => pick(column, Number(event.target.value))}
                       aria-label={`${tr("Modèle")} ${column + 1}`}
-                      className="w-full appearance-none rounded-sm border border-line bg-bg py-2 pl-3 pr-8 text-xs font-semibold text-ink focus:border-gold focus:outline-none"
+                      className="text-sm font-semibold"
                     >
-                      {models.map((option) => (
-                        <option key={option.id} value={option.id} disabled={taken.has(option.id)}>
-                          {option.brand} {option.name}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden />
-                  </div>
+                      {models.map((option) => {
+                        const price = option.best_offer ? formatMoneyParts(option.best_offer.price) : null;
+                        return (
+                          <option key={option.id} value={option.id} disabled={taken.has(option.id)}>
+                            {modelName(option)}
+                            {price ? ` · ${price.amount} ${price.label}` : ""}
+                          </option>
+                        );
+                      })}
+                    </SearchSelect>
+                    <span className="field-label">{`${tr("Modèle")} ${column + 1}`}</span>
+                  </label>
                   <Link href={`/produits/${model.slug}`} className="w-24">
                     <ProductTile
                       id={model.id}
                       brand={model.brand}
                       categoryName={null}
                       imageUrl={model.image_url}
-                      alt={`${model.brand} ${model.name}`}
+                      alt={modelName(model)}
                     />
                   </Link>
                 </div>

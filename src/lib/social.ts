@@ -1,14 +1,11 @@
-/** The shop's public pages, shown in the footer. */
-export const TIKTOK_URL = "https://www.tiktok.com/@techliumgroupe0";
+import type { PaymentBadgeId } from "./shop";
 
-/** The means of payment shown in the footer strip, in order. */
-export type PaymentBadgeId = "mtn" | "wave" | "cash" | "visa" | "mastercard" | "orange";
-
-export const ACCEPTED_PAYMENTS: readonly { id: PaymentBadgeId; label: string }[] = [
-  { id: "mtn", label: "MTN Mobile Money" },
-  { id: "wave", label: "Wave" },
-  { id: "cash", label: "Espèces" },
-  { id: "visa", label: "Visa" },
-  { id: "mastercard", label: "Mastercard" },
-  { id: "orange", label: "Orange Money" },
-];
+/** The drawn means of payment, with their names (the backoffice picks which ones the footer shows). */
+export const PAYMENT_LABELS: Record<PaymentBadgeId, string> = {
+  mtn: "MTN Mobile Money",
+  wave: "Wave",
+  cash: "Espèces",
+  visa: "Visa",
+  mastercard: "Mastercard",
+  orange: "Orange Money",
+};

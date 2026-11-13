@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Product } from "./catalog";
-import { attributeLabel, attributeValue, brandRanges, compareBrands, defaultPicks, rangeModels, specRows } from "./compare";
+import { attributeLabel, attributeValue, brandRanges, compareBrands, defaultPicks, modelName, rangeModels, specRows } from "./compare";
 
 function product(id: number, brand: string, category: string, attributes: Product["attributes"] = null, priced = true): Product {
   return {
@@ -87,5 +87,18 @@ describe("specRows", () => {
   it("leaves the colour spec out when the product lists its colours", () => {
     const withColors = { ...product(1, "H", "c", { color: "Noir" }), colors: [{ name: "Noir", hex: "#000000" }] };
     expect(specRows([withColors])).toEqual([]);
+  });
+});
+
+describe("modelName", () => {
+  it("does not repeat a brand the name already starts with", () => {
+    expect(modelName({ brand: "Dahua", name: "Dahua Caméra dôme 5 MP" })).toBe("Dahua Caméra dôme 5 MP");
+    expect(modelName({ brand: "Apple", name: "iPhone 17" })).toBe("Apple iPhone 17");
+  });
+});
+
+describe("specRows without the range's own category", () => {
+  it("leaves a raw category attribute out", () => {
+    expect(specRows([product(1, "H", "c", { category: "security", ram_gb: 8 })]).map((row) => row.key)).toEqual(["ram_gb"]);
   });
 });
