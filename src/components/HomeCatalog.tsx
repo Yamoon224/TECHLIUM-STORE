@@ -12,6 +12,12 @@ import { Pagination } from "@/components/Pagination";
 import { parsePage, PRODUCTS_PER_PAGE } from "@/lib/pagination";
 import { LANGUAGE_COOKIE, parseLanguage } from "@/lib/language";
 import { categoryRows, flashDeals } from "@/lib/home";
+import { getHelpInfo } from "@/lib/help";
+import { BrandMarquee } from "@/components/BrandMarquee";
+import { catalogueBrands } from "@/lib/brands";
+import { ShopLocation } from "@/components/ShopLocation";
+import { ProductComparator } from "@/components/ProductComparator";
+import { ProductFinder } from "@/components/ProductFinder";
 
 /**
  * Reads `searchParams` and the catalog inside the page's Suspense boundary:
@@ -29,6 +35,7 @@ export async function HomeCatalog({ searchParams }: Pick<PageProps<"/">, "search
   let pageInfo = { page: 1, lastPage: 1 };
   const wantedPage = parsePage(params.page);
   const heroSlides = category || search ? [] : await getBanners("hero");
+  const whatsapp = category || search ? null : ((await getHelpInfo())?.contact.whatsapp ?? null);
 
   try {
     if (category || search) {
@@ -43,7 +50,7 @@ export async function HomeCatalog({ searchParams }: Pick<PageProps<"/">, "search
       products = result.products;
       pageInfo = { page: result.page, lastPage: result.lastPage };
     } else {
-      [categories, products] = await Promise.all([getCategories(language), getProducts({ language })]);
+      [categories, products] = await Promise.all([getCategories(language), getProducts({ language, perPage: 100 })]);
     }
   } catch {
     catalogUnavailable = true;
@@ -77,7 +84,13 @@ export async function HomeCatalog({ searchParams }: Pick<PageProps<"/">, "search
               <Pagination page={pageInfo.page} lastPage={pageInfo.lastPage} params={{ category, search }} />
             </>
           ) : (
-            <Shelves products={products} />
+            <>
+              <BrandMarquee brands={catalogueBrands(products)} />
+              <ProductFinder products={products} whatsapp={whatsapp} />
+              <ProductComparator products={products} />
+              <Shelves products={products} />
+              <ShopLocation />
+            </>
           )}
         </div>
       </div>

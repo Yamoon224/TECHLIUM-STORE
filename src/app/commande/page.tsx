@@ -1,6 +1,7 @@
 "use client";
 
 import { Tr } from "@/components/Tr";
+import { ColorLabel } from "@/components/ColorLabel";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { MapPin, Wallet } from "lucide-react";
 import { useRef, useState, type FormEvent } from "react";
@@ -81,7 +82,7 @@ export default function CheckoutPage() {
     try {
       const order = await placeOrder(
         {
-          items: items.map((item) => ({ offer_id: item.offerId, quantity: item.quantity })),
+          items: items.map((item) => ({ offer_id: item.offerId, quantity: item.quantity, color: item.color?.name })),
           customer_name: String(form.get("customer_name") ?? ""),
           customer_phone: String(form.get("customer_phone") ?? ""),
           customer_email: String(form.get("customer_email") ?? "").trim() || undefined,
@@ -234,7 +235,7 @@ export default function CheckoutPage() {
             {items.map((item) => {
               const lineTotal = formatMoneyParts({ amount: item.priceAmount * item.quantity, currency: item.currency });
               return (
-                <li key={item.offerId} className="flex items-center gap-3 py-2">
+                <li key={`${item.offerId}-${item.color?.name ?? ""}`} className="flex items-center gap-3 py-2">
                   <div className="w-12 shrink-0">
                     <ProductTile
                       id={item.offerId}
@@ -246,6 +247,7 @@ export default function CheckoutPage() {
                   </div>
                   <span className="flex-1 text-ink">
                     {item.productName} <span className="text-ink-soft">× {item.quantity}</span>
+                    {item.color ? <ColorLabel color={item.color} /> : null}
                   </span>
                   <span className="text-ink">
                     {lineTotal.amount} {lineTotal.label}

@@ -204,3 +204,28 @@ body {
 .hover\:bg-gold-bright:hover {
   background-image: var(--accent-gradient-hover);
 }
+
+/* Brand strip: fades at both ends and slides left forever; the duration is set per strip. */
+.brand-marquee {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.brand-marquee-track {
+  animation: brand-marquee linear infinite;
+}
+.brand-marquee:hover .brand-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes brand-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee {
+    overflow-x: auto;
+  }
+  .brand-marquee-track {
+    animation: none;
+  }
+}

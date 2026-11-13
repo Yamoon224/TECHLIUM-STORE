@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useAppearance } from "./AppearanceProvider";
 import { useCart } from "./CartProvider";
+import { unitsOfOffer } from "@/lib/cart";
+import type { ProductColor } from "@/lib/catalog";
 import type { CurrencyCode } from "@/lib/money";
 
 export interface AddToCartButtonProps {
@@ -16,6 +18,8 @@ export interface AddToCartButtonProps {
   currency: CurrencyCode;
   stockQuantity: number;
   imageUrl?: string | null;
+  /** Colour picked for this purchase, when the product has colours. */
+  color?: ProductColor | null;
   /** Denser padding/label for grid cards, where space is tight. */
   compact?: boolean;
 }
@@ -29,20 +33,23 @@ export function AddToCartButton({
   currency,
   stockQuantity,
   imageUrl,
+  color = null,
   compact = false,
 }: AddToCartButtonProps) {
   const { add, items, updateQuantity } = useCart();
   const { tr } = useAppearance();
   const [added, setAdded] = useState(false);
 
-  const alreadyInCart = items.find((line) => line.offerId === offerId)?.quantity ?? 0;
+  const colorName = color?.name ?? null;
+  const alreadyInCart = items.find((line) => line.offerId === offerId && (line.color?.name ?? null) === colorName)?.quantity ?? 0;
   const outOfStock = stockQuantity <= 0;
-  const atStockLimit = alreadyInCart >= stockQuantity;
+  // Stock is per offer, shared by all its colours.
+  const atStockLimit = unitsOfOffer(items, offerId) >= stockQuantity;
   const sizeClasses = compact ? "px-3 py-2 text-xs" : "px-4 py-3 text-sm";
 
   function handleClick() {
     add(
-      { offerId, productSlug, productName, brand, priceAmount, currency, maxQuantity: stockQuantity, imageUrl },
+      { offerId, productSlug, productName, brand, priceAmount, currency, maxQuantity: stockQuantity, imageUrl, color },
       1,
     );
     setAdded(true);
@@ -67,13 +74,13 @@ export function AddToCartButton({
 
     return (
       <div className="flex w-full items-center justify-between gap-2" role="group" aria-label={tr("Quantité dans le panier")}>
-        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart - 1)} disabled={alreadyInCart <= 1} aria-label={tr("Diminuer la quantité")} className={stepper}>
+        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart - 1, colorName)} disabled={alreadyInCart <= 1} aria-label={tr("Diminuer la quantité")} className={stepper}>
           <Minus className="h-4 w-4" aria-hidden />
         </button>
         <span className={`min-w-8 text-center font-medium text-ink ${compact ? "text-xs" : "text-sm"}`} aria-live="polite">
           {alreadyInCart}
         </span>
-        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart + 1)} disabled={atStockLimit} aria-label={tr("Augmenter la quantité")} className={stepper}>
+        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart + 1, colorName)} disabled={atStockLimit} aria-label={tr("Augmenter la quantité")} className={stepper}>
           <Plus className="h-4 w-4" aria-hidden />
         </button>
       </div>

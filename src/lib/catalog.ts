@@ -45,6 +45,12 @@ export interface ProductVariant {
   offers: Offer[];
 }
 
+export interface ProductColor {
+  name: string;
+  /** #rrggbb */
+  hex: string;
+}
+
 export interface Product {
   id: number;
   brand: string;
@@ -56,6 +62,8 @@ export interface Product {
   /** The whole gallery, cover first (product page only needs more than the cover). */
   images?: { id: number; url: string }[];
   attributes: Record<string, string | number> | null;
+  /** Colour choices set in the backoffice; empty when the product has none. */
+  colors?: ProductColor[];
   condition_state: "neuf" | "reconditionne" | "occasion";
   category: Category | null;
   best_offer: Offer | null;
@@ -89,6 +97,8 @@ export interface ProductFilters {
   search?: string;
   /** Texts (name, description) in this language when the catalogue has them. */
   language?: Language;
+  /** Page size of the one request (the API caps it at 100). */
+  perPage?: number;
 }
 
 export async function getProducts(filters: ProductFilters = {}): Promise<Product[]> {
@@ -96,6 +106,7 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
   if (filters.category) params.set("category", filters.category);
   if (filters.search) params.set("search", filters.search);
   if (filters.language === "en") params.set("lang", "en");
+  if (filters.perPage) params.set("per_page", String(filters.perPage));
 
   const query = params.size > 0 ? `?${params.toString()}` : "";
   const page = await fetchJson<Paginated<Product>>(`/catalog/products${query}`);

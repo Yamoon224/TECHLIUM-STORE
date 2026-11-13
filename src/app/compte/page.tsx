@@ -1,6 +1,7 @@
 "use client";
 
 import { Tr } from "@/components/Tr";
+import { ColorLabel } from "@/components/ColorLabel";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { LogOut, Package } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -160,6 +161,7 @@ function OrderCard({ order, token }: { order: Order; token: string }) {
             <li key={item.offer_id} className="flex items-center justify-between gap-3 py-2">
               <span className="text-ink">
                 {item.brand} {item.product_name} <span className="text-ink-soft">× {item.quantity}</span>
+                {item.color ? <ColorLabel color={item.color} /> : null}
               </span>
               <span className="shrink-0 text-ink-soft">
                 {line.amount} {line.label}

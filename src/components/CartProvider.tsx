@@ -17,8 +17,8 @@ interface CartContextValue {
   count: number;
   subtotalAmount: number;
   add: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
-  updateQuantity: (offerId: number, quantity: number) => void;
-  remove: (offerId: number) => void;
+  updateQuantity: (offerId: number, quantity: number, color?: string | null) => void;
+  remove: (offerId: number, color?: string | null) => void;
   clear: () => void;
 }
 
@@ -48,8 +48,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     count: cartCount(items),
     subtotalAmount: cartSubtotalAmount(items),
     add: (item, quantity = 1) => setItems((current) => addToCart(current, item, quantity)),
-    updateQuantity: (offerId, quantity) => setItems((current) => setQuantity(current, offerId, quantity)),
-    remove: (offerId) => setItems((current) => removeFromCart(current, offerId)),
+    updateQuantity: (offerId, quantity, color) => setItems((current) => setQuantity(current, offerId, quantity, color)),
+    remove: (offerId, color) => setItems((current) => removeFromCart(current, offerId, color)),
     clear: () => setItems([]),
   };
 

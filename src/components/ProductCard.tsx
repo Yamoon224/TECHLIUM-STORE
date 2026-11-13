@@ -4,6 +4,7 @@ import { formatMoneyParts } from "@/lib/money";
 import { discountPercent } from "@/lib/pricing";
 import type { Product } from "@/lib/catalog";
 import { AddToCartButton } from "./AddToCartButton";
+import { ColorSwatches } from "./ColorSwatches";
 import { ProductTile } from "./ProductTile";
 
 const CONDITION_LABEL: Record<Product["condition_state"], string> = {
@@ -43,6 +44,8 @@ export function ProductCard({ product }: { product: Product }) {
           {product.brand} {product.name}
         </h3>
 
+        {product.colors?.length ? <ColorSwatches colors={product.colors} size="sm" /> : null}
+
         {price ? (
           <div className="flex flex-col">
             <span className="text-base font-semibold text-ink">
@@ -76,7 +79,14 @@ export function ProductCard({ product }: { product: Product }) {
         {offer && offer.seller === "vendor" ? <p className="text-xs text-gold-bright"><Tr>Vendeur vérifié</Tr></p> : null}
       </Link>
 
-      {offer ? (
+      {offer && product.colors?.length ? (
+        <Link
+          href={`/produits/${product.slug}`}
+          className="inline-flex w-full items-center justify-center rounded-sm border border-gold px-3 py-2 text-xs font-medium text-gold-bright transition-colors hover:bg-gold-highlight"
+        >
+          <Tr>Choisir une couleur</Tr>
+        </Link>
+      ) : offer ? (
         <AddToCartButton
           offerId={offer.id}
           productSlug={product.slug}

@@ -1,6 +1,8 @@
 "use client";
 
 import { Tr } from "@/components/Tr";
+import { unitsOfOffer } from "@/lib/cart";
+import { ColorLabel } from "@/components/ColorLabel";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -45,7 +47,7 @@ export default function CartPage() {
               const unit = formatMoneyParts({ amount: item.priceAmount, currency: item.currency });
 
               return (
-                <li key={item.offerId} className="flex items-start gap-4 p-4">
+                <li key={`${item.offerId}-${item.color?.name ?? ""}`} className="flex items-start gap-4 p-4">
                   <div className="w-20 shrink-0">
                     <ProductTile
                       id={item.offerId}
@@ -60,6 +62,7 @@ export default function CartPage() {
                     <Link href={`/produits/${item.productSlug}`} className="text-sm font-medium text-ink hover:text-gold">
                       {item.brand} {item.productName}
                     </Link>
+                    {item.color ? <ColorLabel color={item.color} /> : null}
                     <p className="text-xs text-ink-soft">
                       <Tr>Prix unitaire :</Tr> {unit.amount} {unit.label}
                     </p>
@@ -67,7 +70,7 @@ export default function CartPage() {
                     <div className="mt-2 flex items-center gap-2">
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.offerId, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.offerId, item.quantity - 1, item.color?.name)}
                         disabled={item.quantity <= 1}
                         className="h-8 w-8 rounded-sm border border-line text-ink hover:border-gold disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line"
                         aria-label={tr("Diminuer la quantité")}
@@ -77,8 +80,8 @@ export default function CartPage() {
                       <span className="w-8 text-center text-sm text-ink">{item.quantity}</span>
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.offerId, item.quantity + 1)}
-                        disabled={item.quantity >= item.maxQuantity}
+                        onClick={() => updateQuantity(item.offerId, item.quantity + 1, item.color?.name)}
+                        disabled={unitsOfOffer(items, item.offerId) >= item.maxQuantity}
                         className="h-8 w-8 rounded-sm border border-line text-ink hover:border-gold disabled:cursor-not-allowed disabled:opacity-40"
                         aria-label={tr("Augmenter la quantité")}
                       >
@@ -86,7 +89,7 @@ export default function CartPage() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => remove(item.offerId)}
+                        onClick={() => remove(item.offerId, item.color?.name)}
                         className="ml-3 flex items-center gap-1 text-xs font-medium text-gold-bright underline-offset-4 hover:underline"
                       >
                         <Trash2 className="h-3.5 w-3.5" aria-hidden /> <Tr>Retirer</Tr>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Tr } from "@/components/Tr";
+import { ColorLabel } from "@/components/ColorLabel";
 import { use, useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useAppearance } from "./AppearanceProvider";
@@ -140,6 +141,7 @@ function OrderSummary({ order }: { order: Order }) {
             <li key={item.offer_id} className="flex items-center justify-between py-2">
               <span className="text-ink">
                 {item.product_name} <span className="text-ink-soft">× {item.quantity}</span>
+                {item.color ? <ColorLabel color={item.color} /> : null}
               </span>
               <span className="text-ink">
                 {lineTotal.amount} {lineTotal.label}

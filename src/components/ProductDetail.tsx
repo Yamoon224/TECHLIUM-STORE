@@ -2,8 +2,8 @@ import { BadgeCheck, ShieldCheck, Store, Truck } from "lucide-react";
 import { Tr } from "@/components/Tr";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { AddToCartButton } from "@/components/AddToCartButton";
 import { ProductReviews } from "@/components/ProductReviews";
+import { ProductBuyBox } from "@/components/ProductBuyBox";
 import { ProductGallery } from "@/components/ProductGallery";
 import { formatMoneyParts } from "@/lib/money";
 import { discountPercent } from "@/lib/pricing";
@@ -118,18 +118,17 @@ export async function ProductDetail({ params }: Pick<PageProps<"/produits/[slug]
           ) : null}
 
           {offer ? (
-            <div className="max-w-sm">
-              <AddToCartButton
-                offerId={offer.id}
-                productSlug={product.slug}
-                productName={product.name}
-                brand={product.brand}
-                priceAmount={offer.price.amount}
-                currency={offer.price.currency}
-                stockQuantity={offer.stock_quantity}
-                imageUrl={product.image_url}
-              />
-            </div>
+            <ProductBuyBox
+              colors={product.colors ?? []}
+              offerId={offer.id}
+              productSlug={product.slug}
+              productName={product.name}
+              brand={product.brand}
+              priceAmount={offer.price.amount}
+              currency={offer.price.currency}
+              stockQuantity={offer.stock_quantity}
+              imageUrl={product.image_url}
+            />
           ) : null}
 
           <ul className="flex flex-col gap-2 rounded-sm bg-bg p-3 text-sm text-ink">

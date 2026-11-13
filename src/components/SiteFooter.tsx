@@ -1,6 +1,8 @@
-import { CircleHelp, ShieldCheck, User, type LucideIcon } from "lucide-react";
+import { CircleHelp, MapPin, ShieldCheck, User, type LucideIcon } from "lucide-react";
 import { Tr } from "@/components/Tr";
 import Link from "next/link";
+import { FooterSocial } from "@/components/FooterSocial";
+import { PaymentBadges } from "@/components/PaymentBadges";
 
 const COLUMNS: { title: string; Icon: LucideIcon; links: { label: string; href: string }[] }[] = [
   {
@@ -23,6 +25,14 @@ const COLUMNS: { title: string; Icon: LucideIcon; links: { label: string; href: 
     ],
   },
   {
+    title: "Notre boutique",
+    Icon: MapPin,
+    links: [
+      { label: "Localisation et itinéraire", href: "/boutique" },
+      { label: "Contacter le support", href: "/support" },
+    ],
+  },
+  {
     title: "Pourquoi TechLium",
     Icon: ShieldCheck,
     links: [
@@ -36,7 +46,7 @@ const COLUMNS: { title: string; Icon: LucideIcon; links: { label: string; href: 
 export function SiteFooter() {
   return (
     <footer className="mt-12 bg-chrome text-white">
-      <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
         {COLUMNS.map((column) => (
           <div key={column.title} className="flex flex-col gap-3">
             <h2 className="flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-wide text-gold">
@@ -54,6 +64,10 @@ export function SiteFooter() {
             </ul>
           </div>
         ))}
+      </div>
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-6 px-4 pb-10">
+        <FooterSocial />
+        <PaymentBadges />
       </div>
       <p className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/60">
         <Tr>© TechLium - Produits tech authentiques, livrés chez vous.</Tr>

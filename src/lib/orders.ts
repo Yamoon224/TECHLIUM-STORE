@@ -6,6 +6,8 @@ export interface OrderItem {
   offer_id: number;
   product_name: string;
   brand: string;
+  /** Colour picked, null when the product has none. */
+  color?: { name: string; hex: string } | null;
   quantity: number;
   unit_price: { amount: number; currency: CurrencyCode };
   line_total: { amount: number; currency: CurrencyCode };
@@ -67,7 +69,7 @@ export function partialLabel(order: Pick<Order, "partial" | "sub_orders">): stri
 }
 
 export interface PlaceOrderInput {
-  items: { offer_id: number; quantity: number }[];
+  items: { offer_id: number; quantity: number; color?: string }[];
   customer_name: string;
   customer_phone: string;
   /** Optional: also receive order updates by e-mail. */

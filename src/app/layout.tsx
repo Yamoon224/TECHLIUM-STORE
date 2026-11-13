@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { BackToMarketplace } from "@/components/BackToMarketplace";
 import { FooterBanner } from "@/components/FooterBanner";
 import { SideBanners } from "@/components/SideBanners";
+import { ChatAssistant } from "@/components/ChatAssistant";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { STORAGE_KEY } from "@/lib/appearance";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 <FooterBanner />
               </Suspense>
               <SiteFooter />
+              <ChatAssistant />
               <Suspense fallback={null}>
                 <SideBanners />
               </Suspense>
