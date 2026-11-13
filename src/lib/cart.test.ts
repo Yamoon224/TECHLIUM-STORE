@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addToCart, cartCount, cartSubtotalAmount, removeFromCart, setQuantity, unitsOfOffer, type CartItem } from "./cart";
+import { addToCart, cartCount, cartSubtotalAmount, MAX_LINE_QUANTITY, removeFromCart, setQuantity, type CartItem } from "./cart";
 
 function item(overrides: Partial<Omit<CartItem, "quantity">> = {}) {
   return {
@@ -9,7 +9,6 @@ function item(overrides: Partial<Omit<CartItem, "quantity">> = {}) {
     brand: "Samsung",
     priceAmount: 185_000,
     currency: "XOF" as const,
-    maxQuantity: 10,
     ...overrides,
   };
 }
@@ -27,15 +26,14 @@ describe("addToCart", () => {
     expect(result[0]?.quantity).toBe(5);
   });
 
-  it("caps the quantity at the offer's stock", () => {
-    const result = addToCart([], item({ maxQuantity: 3 }), 10);
-    expect(result[0]?.quantity).toBe(3);
+  it("is not limited by the stock: an active product can be ordered in any quantity", () => {
+    expect(addToCart([], item(), 40)[0]?.quantity).toBe(40);
   });
 
-  it("caps a merge at the offer's stock too", () => {
-    const cart = [{ ...item({ maxQuantity: 3 }), quantity: 2 }];
-    const result = addToCart(cart, item({ maxQuantity: 3 }), 5);
-    expect(result[0]?.quantity).toBe(3);
+  it("stops at the most one order line can hold", () => {
+    expect(addToCart([], item(), 500)[0]?.quantity).toBe(MAX_LINE_QUANTITY);
+    const cart = [{ ...item(), quantity: 90 }];
+    expect(addToCart(cart, item(), 20)[0]?.quantity).toBe(MAX_LINE_QUANTITY);
   });
 });
 
@@ -46,10 +44,10 @@ describe("setQuantity", () => {
     expect(result[0]?.quantity).toBe(5);
   });
 
-  it("caps the new quantity at stock", () => {
-    const cart = [{ ...item({ maxQuantity: 4 }), quantity: 2 }];
-    const result = setQuantity(cart, 1, 99);
-    expect(result[0]?.quantity).toBe(4);
+  it("accepts a quantity above any stock, up to the line limit", () => {
+    const cart = [{ ...item(), quantity: 2 }];
+    expect(setQuantity(cart, 1, 50)[0]?.quantity).toBe(50);
+    expect(setQuantity(cart, 1, 5000)[0]?.quantity).toBe(MAX_LINE_QUANTITY);
   });
 
   it("removes the line when the quantity drops to zero", () => {
@@ -97,11 +95,6 @@ describe("colours", () => {
     const cart = addToCart(addToCart([], item({ color: blue }), 1), item({ color: blue }), 2);
     expect(cart).toHaveLength(1);
     expect(cart[0]?.quantity).toBe(3);
-  });
-
-  it("shares the stock between colours", () => {
-    const cart = addToCart(addToCart([], item({ color: blue, maxQuantity: 3 }), 2), item({ color: black, maxQuantity: 3 }), 5);
-    expect(unitsOfOffer(cart, 1)).toBe(3);
   });
 
   it("changes and removes only the line of the colour given", () => {

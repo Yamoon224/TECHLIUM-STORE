@@ -102,7 +102,8 @@ function matches(haystack: string[], word: string): boolean {
 
 /** Products matching the words (all of them, else the best partial match) and the budget. */
 export function searchProducts(products: readonly Product[], words: string[], budget: BudgetWish | null, limit = 3): { found: Product[]; exact: boolean } {
-  const sellable = products.filter((product) => product.best_offer?.in_stock);
+  // Stock does not matter: an active product can always be ordered.
+  const sellable = products.filter((product) => product.best_offer);
 
   const scored = sellable.map((product) => {
     const haystack = normalize(`${product.brand} ${product.name} ${product.category?.name ?? ""}`).split(" ");

@@ -62,7 +62,8 @@ export function ProductCard({ product }: { product: Product }) {
         )}
 
         {offer && !offer.in_stock ? (
-          <p className="text-xs font-medium text-danger"><Tr>Rupture de stock</Tr></p>
+          // Still orderable: an active product is never hidden or blocked for lack of stock.
+          <p className="text-xs font-medium text-gold-bright"><Tr>Sur commande</Tr></p>
         ) : offer && offer.stock_quantity <= LOW_STOCK_THRESHOLD ? (
           <p className="text-xs font-medium text-gold-bright">{offer.stock_quantity} <Tr>{offer.stock_quantity > 1 ? "articles restants" : "article restant"}</Tr></p>
         ) : null}
@@ -94,7 +95,6 @@ export function ProductCard({ product }: { product: Product }) {
           brand={product.brand}
           priceAmount={offer.price.amount}
           currency={offer.price.currency}
-          stockQuantity={offer.stock_quantity}
           imageUrl={product.image_url}
           compact
         />

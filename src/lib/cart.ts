@@ -10,7 +10,6 @@ export interface CartItem {
   brand: string;
   priceAmount: number;
   currency: CurrencyCode;
-  maxQuantity: number;
   quantity: number;
   /** Product photo captured when added; absent for older carts or products without one. */
   imageUrl?: string | null;
@@ -48,23 +47,22 @@ export function saveCart(items: CartItem[]): void {
   }
 }
 
-/** Most units one colour line can hold: the offer's stock minus what its other colours already take. */
-function roomFor(items: CartItem[], offerId: number, color: string | null | undefined, maxQuantity: number): number {
-  const others = items.filter((line) => line.offerId === offerId && !sameLine(line, offerId, color));
-  return Math.max(0, maxQuantity - others.reduce((total, line) => total + line.quantity, 0));
-}
+/** Most units of one offer (in one colour) a cart line holds: the order API takes up to 99 per line. */
+export const MAX_LINE_QUANTITY = 99;
 
-/** Adds `quantity` of an offer in a colour, capped at its stock, merging with any existing line. */
+/**
+ * Adds `quantity` of an offer in a colour, merging with any existing line. The stock does not
+ * limit it: an active product can be ordered even when the shelf does not cover the quantity.
+ */
 export function addToCart(items: CartItem[], item: Omit<CartItem, "quantity">, quantity: number): CartItem[] {
   const existing = items.find((line) => sameLine(line, item.offerId, item.color?.name));
-  const room = roomFor(items, item.offerId, item.color?.name, item.maxQuantity);
 
   if (!existing) {
-    return [...items, { ...item, quantity: Math.min(quantity, room) }];
+    return [...items, { ...item, quantity: Math.min(quantity, MAX_LINE_QUANTITY) }];
   }
 
   return items.map((line) =>
-    sameLine(line, item.offerId, item.color?.name) ? { ...line, quantity: Math.min(line.quantity + quantity, room) } : line,
+    sameLine(line, item.offerId, item.color?.name) ? { ...line, quantity: Math.min(line.quantity + quantity, MAX_LINE_QUANTITY) } : line,
   );
 }
 
@@ -73,18 +71,11 @@ export function setQuantity(items: CartItem[], offerId: number, quantity: number
     return removeFromCart(items, offerId, color);
   }
 
-  return items.map((line) =>
-    sameLine(line, offerId, color) ? { ...line, quantity: Math.min(quantity, roomFor(items, offerId, color, line.maxQuantity)) } : line,
-  );
+  return items.map((line) => (sameLine(line, offerId, color) ? { ...line, quantity: Math.min(quantity, MAX_LINE_QUANTITY) } : line));
 }
 
 export function removeFromCart(items: CartItem[], offerId: number, color?: string | null): CartItem[] {
   return items.filter((line) => !sameLine(line, offerId, color));
-}
-
-/** Units of one offer across all its colours: the stock is shared between colours. */
-export function unitsOfOffer(items: CartItem[], offerId: number): number {
-  return items.filter((line) => line.offerId === offerId).reduce((total, line) => total + line.quantity, 0);
 }
 
 export function cartCount(items: CartItem[]): number {

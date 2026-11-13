@@ -16,6 +16,7 @@ import { getHelpInfo } from "@/lib/help";
 import { BrandMarquee } from "@/components/BrandMarquee";
 import { catalogueBrands } from "@/lib/brands";
 import { ShopLocation } from "@/components/ShopLocation";
+import { ExploreSection } from "@/components/ExploreSection";
 import { ProductComparator } from "@/components/ProductComparator";
 import { ProductFinder } from "@/components/ProductFinder";
 
@@ -86,6 +87,7 @@ export async function HomeCatalog({ searchParams }: Pick<PageProps<"/">, "search
           ) : (
             <>
               <BrandMarquee brands={catalogueBrands(products)} />
+              <ExploreSection products={products} />
               <ProductFinder products={products} whatsapp={whatsapp} />
               <ProductComparator products={products} />
               <Shelves products={products} />

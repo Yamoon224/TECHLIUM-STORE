@@ -1,12 +1,11 @@
 import type { Product } from "./catalog";
 import { discountPercent } from "./pricing";
 
-/** In-stock products with a real reduction, biggest reduction first. */
+/** Products with a real reduction, biggest reduction first. */
 export function flashDeals(products: readonly Product[], limit = 6): Product[] {
   return products
     .map((product) => ({ product, percent: product.best_offer ? discountPercent(product.best_offer) : null }))
     .filter((entry): entry is { product: Product; percent: number } => entry.percent !== null)
-    .filter((entry) => entry.product.best_offer?.in_stock)
     .sort((a, b) => b.percent - a.percent)
     .slice(0, limit)
     .map((entry) => entry.product);

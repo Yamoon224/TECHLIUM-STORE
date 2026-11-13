@@ -87,19 +87,19 @@ describe("detectIntent", () => {
 });
 
 describe("searchProducts", () => {
-  it("finds a model by its words, in stock only", () => {
+  it("finds a model by its words, out-of-stock ones included", () => {
     const { found, exact } = searchProducts(catalogue, ["iphone"], null);
-    expect(found.map((p) => p.id)).toEqual([2, 1]);
+    expect(found.map((p) => p.id)).toEqual([5, 2, 1]);
     expect(exact).toBe(true);
   });
 
   it("matches a category by its plural or singular", () => {
-    expect(searchProducts(catalogue, ["telephone"], null).found.map((p) => p.id)).toEqual([3, 2, 1]);
+    expect(searchProducts(catalogue, ["telephone"], null).found.map((p) => p.id)).toEqual([3, 5, 2]);
   });
 
   it("applies the budget", () => {
     const { found } = searchProducts(catalogue, ["iphone"], { amount: 700_000, kind: "max", matched: "" });
-    expect(found.map((p) => p.id)).toEqual([2]);
+    expect(found.map((p) => p.id)).toEqual([5, 2]);
   });
 
   it("falls back to the best partial match and says so", () => {

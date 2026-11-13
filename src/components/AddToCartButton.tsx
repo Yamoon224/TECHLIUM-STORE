@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useAppearance } from "./AppearanceProvider";
 import { useCart } from "./CartProvider";
-import { unitsOfOffer } from "@/lib/cart";
+import { MAX_LINE_QUANTITY } from "@/lib/cart";
 import type { ProductColor } from "@/lib/catalog";
 import type { CurrencyCode } from "@/lib/money";
 
@@ -16,7 +16,6 @@ export interface AddToCartButtonProps {
   brand: string;
   priceAmount: number;
   currency: CurrencyCode;
-  stockQuantity: number;
   imageUrl?: string | null;
   /** Colour picked for this purchase, when the product has colours. */
   color?: ProductColor | null;
@@ -31,7 +30,6 @@ export function AddToCartButton({
   brand,
   priceAmount,
   currency,
-  stockQuantity,
   imageUrl,
   color = null,
   compact = false,
@@ -42,30 +40,17 @@ export function AddToCartButton({
 
   const colorName = color?.name ?? null;
   const alreadyInCart = items.find((line) => line.offerId === offerId && (line.color?.name ?? null) === colorName)?.quantity ?? 0;
-  const outOfStock = stockQuantity <= 0;
-  // Stock is per offer, shared by all its colours.
-  const atStockLimit = unitsOfOffer(items, offerId) >= stockQuantity;
+  // The stock does not limit an order (an active product can be ordered in any quantity): only the line does.
+  const atLimit = alreadyInCart >= MAX_LINE_QUANTITY;
   const sizeClasses = compact ? "px-3 py-2 text-xs" : "px-4 py-3 text-sm";
 
   function handleClick() {
     add(
-      { offerId, productSlug, productName, brand, priceAmount, currency, maxQuantity: stockQuantity, imageUrl, color },
+      { offerId, productSlug, productName, brand, priceAmount, currency, imageUrl, color },
       1,
     );
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1500);
-  }
-
-  if (outOfStock) {
-    return (
-      <button
-        type="button"
-        disabled
-        className={`w-full cursor-not-allowed rounded-sm border border-line bg-surface text-ink-soft ${sizeClasses}`}
-      >
-        <Tr>Rupture de stock</Tr>
-      </button>
-    );
   }
 
   // Already in the cart: the quantity is changed here, the product is not added a second time.
@@ -80,7 +65,7 @@ export function AddToCartButton({
         <span className={`min-w-8 text-center font-medium text-ink ${compact ? "text-xs" : "text-sm"}`} aria-live="polite">
           {alreadyInCart}
         </span>
-        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart + 1, colorName)} disabled={atStockLimit} aria-label={tr("Augmenter la quantité")} className={stepper}>
+        <button type="button" onClick={() => updateQuantity(offerId, alreadyInCart + 1, colorName)} disabled={atLimit} aria-label={tr("Augmenter la quantité")} className={stepper}>
           <Plus className="h-4 w-4" aria-hidden />
         </button>
       </div>
@@ -91,11 +76,11 @@ export function AddToCartButton({
     <button
       type="button"
       onClick={handleClick}
-      disabled={atStockLimit}
+      disabled={atLimit}
       className={`inline-flex w-full items-center justify-center gap-2 rounded-sm bg-gold font-medium text-white transition-colors hover:bg-gold-bright disabled:cursor-not-allowed disabled:opacity-60 ${sizeClasses}`}
     >
-      {!atStockLimit && !added && <ShoppingCart className="h-4 w-4 shrink-0" aria-hidden />}
-      {atStockLimit ? <Tr>Stock maximum</Tr> : added ? <Tr>Ajouté ✓</Tr> : <Tr>Ajouter au panier</Tr>}
+      {!atLimit && !added && <ShoppingCart className="h-4 w-4 shrink-0" aria-hidden />}
+      {atLimit ? <Tr>Quantité maximale</Tr> : added ? <Tr>Ajouté ✓</Tr> : <Tr>Ajouter au panier</Tr>}
     </button>
   );
 }

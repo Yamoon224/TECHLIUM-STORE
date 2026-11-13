@@ -113,6 +113,10 @@ export async function ProductDetail({ params }: Pick<PageProps<"/produits/[slug]
             <p className="text-ink-soft"><Tr>Bientôt disponible</Tr></p>
           )}
 
+          {offer && !offer.in_stock ? (
+            <p className="text-sm font-medium text-gold-bright"><Tr>Sur commande</Tr></p>
+          ) : null}
+
           {offer && offer.in_stock && offer.stock_quantity <= LOW_STOCK_THRESHOLD ? (
             <p className="text-sm font-medium text-gold-bright"><Tr>Plus que</Tr> {offer.stock_quantity} <Tr>en stock</Tr></p>
           ) : null}
@@ -126,7 +130,6 @@ export async function ProductDetail({ params }: Pick<PageProps<"/produits/[slug]
               brand={product.brand}
               priceAmount={offer.price.amount}
               currency={offer.price.currency}
-              stockQuantity={offer.stock_quantity}
               imageUrl={product.image_url}
             />
           ) : null}

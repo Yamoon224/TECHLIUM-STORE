@@ -105,7 +105,7 @@ export function ChatAssistant() {
   // A few questions to start from: the biggest category, the first product, then the usual service questions.
   const suggestions = useMemo(() => {
     const category = finderCategories(products, 1)[0];
-    const first = products.find((product) => product.best_offer?.in_stock);
+    const first = products.find((product) => product.best_offer);
     return [
       category ? `${tr("Trouver")} ${category.name}` : null,
       first ? `${first.brand} ${first.name}` : null,

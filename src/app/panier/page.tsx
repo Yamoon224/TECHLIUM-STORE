@@ -1,7 +1,7 @@
 "use client";
 
 import { Tr } from "@/components/Tr";
-import { unitsOfOffer } from "@/lib/cart";
+import { MAX_LINE_QUANTITY } from "@/lib/cart";
 import { ColorLabel } from "@/components/ColorLabel";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { ShoppingCart, Trash2 } from "lucide-react";
@@ -81,7 +81,7 @@ export default function CartPage() {
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.offerId, item.quantity + 1, item.color?.name)}
-                        disabled={unitsOfOffer(items, item.offerId) >= item.maxQuantity}
+                        disabled={item.quantity >= MAX_LINE_QUANTITY}
                         className="h-8 w-8 rounded-sm border border-line text-ink hover:border-gold disabled:cursor-not-allowed disabled:opacity-40"
                         aria-label={tr("Augmenter la quantité")}
                       >

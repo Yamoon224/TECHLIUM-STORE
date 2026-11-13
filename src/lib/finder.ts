@@ -38,9 +38,9 @@ export interface FinderCategory {
   count: number;
 }
 
-/** Products that can actually be bought: they have a price and are in stock. */
+/** Products that can be bought: they have a price. Stock does not matter, an active product can always be ordered. */
 function buyable(products: readonly Product[]): Product[] {
-  return products.filter((product) => product.best_offer?.in_stock);
+  return products.filter((product) => product.best_offer);
 }
 
 /** The categories that have something to buy, biggest first (the first question's choices). */
@@ -75,7 +75,7 @@ function inBudget(product: Product, budget: Budget): boolean {
   return price >= budget.min && (budget.max === null || price < budget.max);
 }
 
-/** The products fitting the choices, in-stock only, cheapest first. */
+/** The products fitting the choices, cheapest first. */
 export function findProducts(products: readonly Product[], choice: FinderChoice, limit = 3): Product[] {
   const budget = BUDGETS.find((candidate) => candidate.id === choice.budget);
 

@@ -63,6 +63,51 @@ export function ProductComparator({ products }: { products: Product[] }) {
 
   const columns = { gridTemplateColumns: `repeat(${compared.length}, minmax(9.5rem, 1fr))` };
 
+  /** The model's list (searchable) and photo: the same on the table and on the phone cards. */
+  function modelHead(model: Product, column: number) {
+    const taken = new Set(picks.filter((_, index) => index !== column));
+
+    return (
+      <div className="flex flex-col items-center gap-3">
+        <label className="field w-full">
+          <SearchSelect
+            value={model.id}
+            onChange={(event) => pick(column, Number(event.target.value))}
+            aria-label={`${tr("Modèle")} ${column + 1}`}
+            className="text-sm font-semibold"
+          >
+            {models.map((option) => {
+              const price = option.best_offer ? formatMoneyParts(option.best_offer.price) : null;
+              return (
+                <option key={option.id} value={option.id} disabled={taken.has(option.id)}>
+                  {modelName(option)}
+                  {price ? ` · ${price.amount} ${price.label}` : ""}
+                </option>
+              );
+            })}
+          </SearchSelect>
+          <span className="field-label">{`${tr("Modèle")} ${column + 1}`}</span>
+        </label>
+        <Link href={`/produits/${model.slug}`} className="w-24">
+          <ProductTile id={model.id} brand={model.brand} categoryName={null} imageUrl={model.image_url} alt={modelName(model)} />
+        </Link>
+      </div>
+    );
+  }
+
+  /** Price, condition, warranty then the specs, as label / value pairs for one model (phone cards). */
+  function modelFacts(model: Product, column: number): { label: string; value: string }[] {
+    const price = model.best_offer ? formatMoneyParts(model.best_offer.price) : null;
+    const warranty = model.best_offer && model.best_offer.warranty_months > 0 ? `${model.best_offer.warranty_months} ${tr("mois")}` : "—";
+
+    return [
+      { label: tr("Prix"), value: price ? `${price.amount} ${price.label}` : "—" },
+      { label: tr("État"), value: tr(CONDITION_LABEL[model.condition_state]) },
+      { label: tr("Garantie"), value: warranty },
+      ...rows.map((row) => ({ label: tr(row.label), value: row.values[column] ?? "—" })),
+    ];
+  }
+
   return (
     <section aria-labelledby="compare-title" className="flex flex-col gap-4">
       <div className="text-center">
@@ -100,45 +145,39 @@ export function ProductComparator({ products }: { products: Product[] }) {
         ))}
       </Step>
 
-      <div className="overflow-x-auto rounded-sm border border-line bg-surface p-3 shadow-card md:p-4">
-        <div className="flex min-w-max flex-col gap-3 md:min-w-0">
-          <div className="grid items-start gap-3" style={columns}>
-            {compared.map((model, column) => {
-              const taken = new Set(picks.filter((_, index) => index !== column));
-
-              return (
-                <div key={column} className="flex flex-col items-center gap-3">
-                  <label className="field w-full">
-                    <SearchSelect
-                      value={model.id}
-                      onChange={(event) => pick(column, Number(event.target.value))}
-                      aria-label={`${tr("Modèle")} ${column + 1}`}
-                      className="text-sm font-semibold"
-                    >
-                      {models.map((option) => {
-                        const price = option.best_offer ? formatMoneyParts(option.best_offer.price) : null;
-                        return (
-                          <option key={option.id} value={option.id} disabled={taken.has(option.id)}>
-                            {modelName(option)}
-                            {price ? ` · ${price.amount} ${price.label}` : ""}
-                          </option>
-                        );
-                      })}
-                    </SearchSelect>
-                    <span className="field-label">{`${tr("Modèle")} ${column + 1}`}</span>
-                  </label>
-                  <Link href={`/produits/${model.slug}`} className="w-24">
-                    <ProductTile
-                      id={model.id}
-                      brand={model.brand}
-                      categoryName={null}
-                      imageUrl={model.image_url}
-                      alt={modelName(model)}
-                    />
-                  </Link>
+      {/* Phone: the models one under the other, each a card - no sideways scrolling. */}
+      <div className="flex flex-col gap-4 md:hidden">
+        {compared.map((model, column) => (
+          <article key={column} className="flex flex-col gap-3 rounded-sm border border-line bg-surface p-3 shadow-card">
+            {modelHead(model, column)}
+            <dl className="flex flex-col divide-y divide-line border-t border-line text-xs">
+              {modelFacts(model, column).map((fact) => (
+                <div key={fact.label} className="flex items-baseline justify-between gap-4 py-2">
+                  <dt className="text-[10px] font-medium uppercase tracking-wider text-ink-soft">{fact.label}</dt>
+                  <dd className="text-right text-ink">{fact.value}</dd>
                 </div>
-              );
-            })}
+              ))}
+            </dl>
+            <Link
+              href={`/produits/${model.slug}`}
+              className="mx-auto inline-flex items-center rounded-full bg-gold px-5 py-2 text-xs font-semibold text-white transition-colors hover:bg-gold-bright"
+            >
+              <Tr>Commander</Tr>
+            </Link>
+          </article>
+        ))}
+        {compared.length < COMPARE_SLOTS && models.length <= compared.length ? (
+          <p className="text-center text-xs text-ink-soft"><Tr>Cette gamme n&apos;a pas encore d&apos;autre modèle à comparer.</Tr></p>
+        ) : null}
+      </div>
+
+      {/* Tablet and up: the side-by-side table. */}
+      <div className="hidden overflow-x-auto rounded-sm border border-line bg-surface p-3 shadow-card md:block md:p-4">
+        <div className="flex flex-col gap-3">
+          <div className="grid items-start gap-3" style={columns}>
+            {compared.map((model, column) => (
+              <div key={column}>{modelHead(model, column)}</div>
+            ))}
           </div>
 
           <dl className="flex flex-col divide-y divide-line border-t border-line text-center text-xs">

@@ -38,13 +38,13 @@ const catalogue = [
 ];
 
 describe("finderCategories", () => {
-  it("lists categories with something in stock, biggest first", () => {
-    expect(finderCategories(catalogue).map((c) => [c.slug, c.count])).toEqual([["phones", 3], ["laptops", 1]]);
+  it("lists categories with something to buy, biggest first", () => {
+    expect(finderCategories(catalogue).map((c) => [c.slug, c.count])).toEqual([["phones", 4], ["laptops", 1]]);
   });
 });
 
 describe("finderBrands", () => {
-  it("lists the brands of a category, most present first, ignoring out-of-stock", () => {
+  it("lists the brands of a category, most present first, out-of-stock products included", () => {
     expect(finderBrands(catalogue, "phones")).toEqual(["Apple", "Samsung"]);
   });
 
@@ -54,7 +54,7 @@ describe("finderBrands", () => {
 });
 
 describe("findProducts", () => {
-  it("filters on category, budget and brand, cheapest first, in stock only", () => {
+  it("filters on category, budget and brand, cheapest first", () => {
     const found = findProducts(catalogue, { category: "phones", budget: "300-700", brand: "Apple" });
     expect(found.map((p) => p.id)).toEqual([2, 1]);
   });

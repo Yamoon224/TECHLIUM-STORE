@@ -30,7 +30,7 @@ function product(id: number, price: number, compare: number | null, category = "
 }
 
 describe("flashDeals", () => {
-  it("keeps only discounted in-stock products, biggest reduction first", () => {
+  it("keeps only discounted products, biggest reduction first, whatever their stock", () => {
     const deals = flashDeals([
       product(1, 90, 100),
       product(2, 50, 100),
@@ -38,7 +38,7 @@ describe("flashDeals", () => {
       product(4, 10, 100, "phones", false),
     ]);
 
-    expect(deals.map((p) => p.id)).toEqual([2, 1]);
+    expect(deals.map((p) => p.id)).toEqual([4, 2, 1]);
   });
 
   it("respects the limit", () => {

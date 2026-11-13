@@ -8,7 +8,7 @@ import { useAppearance } from "@/components/AppearanceProvider";
  * Previous / next buttons for a horizontally scrolling row of product cards
  * (the element with id `target`): each click moves the row by one product.
  */
-export function ShelfControls({ target }: { target: string }) {
+export function ShelfControls({ target, tone = "light" }: { target: string; tone?: "light" | "dark" }) {
   const { tr } = useAppearance();
   const [edges, setEdges] = useState({ start: true, end: true });
 
@@ -39,7 +39,11 @@ export function ShelfControls({ target }: { target: string }) {
     row.scrollBy({ left: direction * (card.offsetWidth + gap), behavior: "smooth" });
   }
 
-  const button = "rounded-full bg-white/15 p-1.5 text-white transition-colors hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white/15";
+  // "light" sits on a coloured header (the flash sale); "dark" on the page itself.
+  const button =
+    tone === "dark"
+      ? "rounded-full bg-line p-1.5 text-ink transition-colors hover:bg-gold-highlight disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-line"
+      : "rounded-full bg-white/15 p-1.5 text-white transition-colors hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white/15";
 
   return (
     <div className="flex items-center gap-1.5">
